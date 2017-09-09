@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+
+
 public class Player : MonoBehaviour
 {
 	public Rigidbody rbody;
@@ -20,12 +22,19 @@ public class Player : MonoBehaviour
 
 	void Update ()
 	{
-		inputH = Input.GetAxis ("Horizontal");
-		inputV = Input.GetAxis ("Vertical");
+		if (GameManager.instance.usingController) {
+			inputH = Input.GetAxis ("HorizontalJ");
+			inputV = Input.GetAxis ("VerticalJ");
+		} else {
+			inputH = Input.GetAxis ("HorizontalK");
+			inputV = Input.GetAxis ("VerticalK");	
+		}
+
 
 		float moveX = inputH * speed * Time.deltaTime;
 		float moveZ = inputV * speed * Time.deltaTime;
 
 		rbody.velocity = new Vector3 (moveX, 0, moveZ);
+
 	}
 }

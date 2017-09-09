@@ -7,6 +7,8 @@ public class Camera : MonoBehaviour
 	public GameObject focus;
 	private Vector3 offset;
 
+	private float rotateH;
+	private float rotateV;
 
 	void Start ()
 	{
@@ -17,7 +19,22 @@ public class Camera : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		//follows player
 		transform.position = focus.transform.position + offset;
+
+		//rotate camera
+		if (GameManager.instance.usingController) {
+			rotateH = Input.GetAxis ("RotateCamHJ");
+			rotateV = Input.GetAxis ("RotateCamVJ");
+		} else {
+			rotateH = Input.GetAxis ("RotateCamHK");
+			rotateV = Input.GetAxis ("RotateCamVK");
+		}
+		//transform.LookAt (focus.transform);
+		transform.RotateAround (focus.transform.position, Vector3.up, rotateH * 30 * Time.deltaTime);
+		//transform.RotateAround (focus.transform.position, Vector3.left, rotateV * 30 * Time.deltaTime);
+		offset = transform.position - focus.transform.position;
+
 
 	}
 }
