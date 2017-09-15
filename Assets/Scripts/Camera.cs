@@ -16,8 +16,7 @@ public class Camera : MonoBehaviour
 		offset.y += 3;
 	}
 
-	// Update is called once per frame
-	void Update ()
+	void LateUpdate ()
 	{
 		//follows player
 		transform.position = focus.transform.position + offset;
@@ -30,9 +29,9 @@ public class Camera : MonoBehaviour
 			rotateH = Input.GetAxis ("RotateCamHK");
 			rotateV = Input.GetAxis ("RotateCamVK");
 		}
-		//transform.LookAt (focus.transform);
+
 		transform.RotateAround (focus.transform.position, Vector3.up, rotateH * 30 * Time.deltaTime);
-		//transform.RotateAround (focus.transform.position, Vector3.left, rotateV * 30 * Time.deltaTime);
+
 		offset = transform.position - focus.transform.position;
 
 
