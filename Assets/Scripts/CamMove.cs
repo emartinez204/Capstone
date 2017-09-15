@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Camera : MonoBehaviour
+public class CamMove : MonoBehaviour
 {
 	public GameObject focus;
 	private Vector3 offset;
+
+	public float offY;
+	public float distance;
 
 	private float rotateH;
 	private float rotateV;
@@ -13,7 +16,8 @@ public class Camera : MonoBehaviour
 	void Start ()
 	{
 		offset = transform.position - focus.transform.position;
-		offset.y += 3;
+		offset.y += offY;
+		offset.z -= distance;
 	}
 
 	void LateUpdate ()
