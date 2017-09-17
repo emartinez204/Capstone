@@ -17,13 +17,17 @@ public class CamMove : MonoBehaviour
 	{
 		offset = transform.position - focus.transform.position;
 		offset.y += offY;
-		offset.z -= distance;
+		offset.z += distance;
+
 	}
 
 	void LateUpdate ()
 	{
 		//follows player
 		transform.position = focus.transform.position + offset;
+//		transform.position = new Vector3 (focus.transform.position.x, 
+//			focus.transform.position.y + offY, 
+//			focus.transform.position.z - distance);
 
 		//rotate camera
 		if (GameManager.instance.usingController) {

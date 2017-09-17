@@ -8,6 +8,20 @@ public class Interactables : MonoBehaviour
 {
 	public Text itemTxt;
 
+	private string buttonTxt;
+	private string openDoor;
+
+	void Update ()
+	{
+		if (GameManager.instance.usingController) {
+			openDoor = "joystick button 16";
+			buttonTxt = "Press A";
+		} else {
+			openDoor = "e";
+			buttonTxt = "Press E";
+		}
+	}
+
 	void OnTriggerEnter (Collider other)
 	{
 		if (other.tag == "Interactable") {
@@ -15,7 +29,7 @@ public class Interactables : MonoBehaviour
 		}
 
 		if (other.tag == "Door") {
-			itemTxt.text = "Enter next room?";
+			itemTxt.text = "Enter next room? " + buttonTxt;
 			other.GetComponent<Door> ().Move ();
 		}
 	}
@@ -23,10 +37,14 @@ public class Interactables : MonoBehaviour
 	void OnTriggerStay (Collider other)
 	{
 		if (other.tag == "Door") {
-			if (Input.GetKeyDown ("enter")) {
+
+			if (Input.GetKeyDown (openDoor)) {
 				print ("hitting enter");
 				//open door
-				other.GetComponent<Door> ().Move ();
+
+				if (other.GetComponent<Door> ().RotationPending == false)
+					StartCoroutine (other.GetComponent<Door> ().Move ());
+				
 			}
 		}
 	}

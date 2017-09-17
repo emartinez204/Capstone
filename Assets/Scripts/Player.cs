@@ -50,10 +50,11 @@ public class Player : MonoBehaviour
 		forward = forward.normalized;
 		Vector3 right = new Vector3 (forward.z, 0, -forward.x);
 
-		Vector3 moveDirection = (inputH * right + inputV * forward) * 30 * Time.deltaTime;
+		Vector3 moveDirection = (inputH * right + inputV * forward) * speed * Time.deltaTime;
 
-		controller.Move (moveDirection);  
+		//controller.Move (moveDirection);  
 
+		rbody.velocity = moveDirection;
 
 
 	}
