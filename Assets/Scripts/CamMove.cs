@@ -16,8 +16,9 @@ public class CamMove : MonoBehaviour
 	void Start ()
 	{
 		offset = transform.position - focus.transform.position;
-		offset.y += offY;
-		offset.z += distance;
+		offset.y = offY;
+		offset.z = -distance;
+		offset.x = 0;
 
 	}
 
