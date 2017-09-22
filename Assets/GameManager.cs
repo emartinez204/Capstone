@@ -7,7 +7,11 @@ public class GameManager : MonoBehaviour
 {
 
 	public static GameManager instance = null;
+	public bool DEBUG;
 	public bool usingController;
+
+	public Camera cam1;
+	public Camera cam2;
 
 
 	void Awake ()
@@ -19,18 +23,32 @@ public class GameManager : MonoBehaviour
 
 		DontDestroyOnLoad (gameObject);
 
+		//default
+		usingController = false;
+
+		if (DEBUG)
+			showCam2 ();
+		else
+			showCam1 ();
+
 	}
 
-	// Use this for initialization
-	void Start ()
+	public void showCam1 ()
 	{
-		
+		cam1.enabled = true;
+		cam2.enabled = false;
 	}
-	
-	// Update is called once per frame
-	void Update ()
+
+	public void showCam2 ()
 	{
-		
+		cam1.enabled = false;
+		cam2.enabled = true;
 	}
+
+	public void toggleController ()
+	{
+		usingController = !usingController;
+	}
+		
 
 }
