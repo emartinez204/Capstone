@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditorInternal;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +10,9 @@ public class GameManager : MonoBehaviour
 	public static GameManager instance = null;
 	public bool DEBUG;
 	public bool usingController;
+
+	public bool musicOn;
+	public float musicVolume;
 
 	public Camera cam1;
 	public Camera cam2;
@@ -30,6 +34,9 @@ public class GameManager : MonoBehaviour
 			showCam2 ();
 		else
 			showCam1 ();
+
+		musicOn = true;
+		musicVolume = 0.5f;
 
 	}
 
@@ -63,6 +70,16 @@ public class GameManager : MonoBehaviour
 	public void hideElement (GameObject elem)
 	{
 		elem.SetActive (false);
+	}
+
+	public void toggleMusic (Toggle tog)
+	{
+		musicOn = tog.isOn;
+	}
+
+	public void setMusicVolume (Slider slide)
+	{
+		musicVolume = slide.value;
 	}
 		
 
