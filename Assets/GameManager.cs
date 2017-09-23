@@ -49,6 +49,21 @@ public class GameManager : MonoBehaviour
 	{
 		usingController = !usingController;
 	}
+
+	public void testing ()
+	{
+		print ("Clicking the item");
+	}
+
+	public void showElement (GameObject elem)
+	{
+		elem.SetActive (true);
+	}
+
+	public void hideElement (GameObject elem)
+	{
+		elem.SetActive (false);
+	}
 		
 
 }

@@ -13,8 +13,16 @@ public class CamMove : MonoBehaviour
 	private float rotateH;
 	private float rotateV;
 
+	private float maxUp = 60F;
+	private float maxDown = -60F;
+
+	private Quaternion originalRotation;
+
+
 	void Start ()
 	{
+		originalRotation = transform.localRotation;
+
 		offset = transform.position - focus.transform.position;
 		offset.y = offY;
 		offset.z = -distance;
@@ -22,13 +30,11 @@ public class CamMove : MonoBehaviour
 
 	}
 
+
 	void LateUpdate ()
 	{
 		//follows player
 		transform.position = focus.transform.position + offset;
-//		transform.position = new Vector3 (focus.transform.position.x, 
-//			focus.transform.position.y + offY, 
-//			focus.transform.position.z - distance);
 
 		//rotate camera
 		if (GameManager.instance.usingController) {
@@ -39,7 +45,10 @@ public class CamMove : MonoBehaviour
 			rotateV = Input.GetAxis ("RotateCamVK");
 		}
 
+
 		transform.RotateAround (focus.transform.position, Vector3.up, rotateH * 30 * Time.deltaTime);
+		transform.RotateAround (focus.transform.position, Vector3.right, Mathf.Clamp (rotateV * 30 * Time.deltaTime, maxDown, maxUp));
+
 
 		offset = transform.position - focus.transform.position;
 
