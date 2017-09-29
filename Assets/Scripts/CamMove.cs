@@ -16,6 +16,8 @@ public class CamMove : MonoBehaviour
 	private float maxUp = 60F;
 	private float maxDown = -60F;
 
+	private float zero = 0;
+
 	private Quaternion originalRotation;
 
 
@@ -45,13 +47,23 @@ public class CamMove : MonoBehaviour
 			rotateV = Input.GetAxis ("RotateCamVK");
 		}
 
+		float lookUp = rotateV * 30 * Time.deltaTime, maxDown, maxUp;
 
 		transform.RotateAround (focus.transform.position, Vector3.up, rotateH * 30 * Time.deltaTime);
-		transform.RotateAround (focus.transform.position, Vector3.right, Mathf.Clamp (rotateV * 30 * Time.deltaTime, maxDown, maxUp));
+		transform.RotateAround (focus.transform.position, transform.right, lookUp);
 
 
 		offset = transform.position - focus.transform.position;
 
-
 	}
+
+	static float ClampAngle (float angle, float min, float max)
+	{
+		if (angle < -360)
+			angle += 360;
+		if (angle > 360)
+			angle -= 360;
+		return Mathf.Clamp (angle, min, max);
+	}
+
 }
