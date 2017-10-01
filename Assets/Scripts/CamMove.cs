@@ -16,7 +16,6 @@ public class CamMove : MonoBehaviour
 	private float maxUp = 60F;
 	private float maxDown = -60F;
 
-	private float zero = 0;
 
 	private Quaternion originalRotation;
 
