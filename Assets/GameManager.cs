@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
 		DontDestroyOnLoad (gameObject);
 
 		//default
-		usingController = false;
+		//usingController = false;
 
 		if (DEBUG)
 			showCam2 ();

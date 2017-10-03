@@ -13,7 +13,10 @@ public class ButtonMash : MonoBehaviour
 	public Image LoadingBar;
 	public Image CenterBtn;
 
-	public Sprite[] btns;
+	private Sprite[] btns;
+
+	public bool userInputMatches = false;
+
 
 
 	void Start ()
@@ -40,7 +43,15 @@ public class ButtonMash : MonoBehaviour
 			showButton (true);
 
 
-			increaseTimer ();
+			StartCoroutine (fillBar ());
+
+			checkForUserInput ();
+
+			if (userInputMatches) {
+				StopCoroutine (fillBar ());
+				StartCoroutine (fillBar ());
+				userInputMatches = false;
+			} 
 
 
 		} else {
@@ -67,25 +78,48 @@ public class ButtonMash : MonoBehaviour
 		CenterBtn.sprite = btns [rand];
 	}
 
-	void increaseTimer ()
+	void checkForUserInput ()
 	{
-		print ("in increase timer");
+		string curBtn = CenterBtn.sprite.ToString ();
+		string btn2Press = "space";
 
+		if (curBtn == "aBtn") {
+			btn2Press = "joystick button 16";
+		} else if (curBtn == "bBtn") {
+			btn2Press = "joystick button 17";
+		} else if (curBtn == "xBtn") {
+			btn2Press = "joystick button 18";
+		} else if (curBtn == "yBtn") {
+			btn2Press = "joystick button 19";
+		} else if (curBtn == "arrowUp") {
+			btn2Press = "UpArrow";
+		} else if (curBtn == "arrowDown") {
+			btn2Press = "DownArrow";
+		} else if (curBtn == "arrowLeft") {
+			btn2Press = "LeftArrow";
+		} else if (curBtn == "arrowRight") {
+			btn2Press = "RightArrow";
+		}
 
-
-		StartCoroutine (fillBar ());
-
-
+		if (Input.GetKeyDown (btn2Press)) {
+			userInputMatches = true;
+		}
 	}
+
 
 	IEnumerator fillBar ()
 	{
 		//LoadingBar.fillAmount = Mathf.Lerp (0f, 1f, 0.4f * Time.time);
-		LoadingBar.fillAmount += 0.02f;
+		LoadingBar.fillAmount += 0.015f;
 		yield return new WaitForSecondsRealtime (0.1f);
+		if (LoadingBar.fillAmount >= 0.75f)
+			LoadingBar.color = Color.red;
 		if (LoadingBar.fillAmount == 1f) {
 			LoadingBar.fillAmount = 0f;
+			LoadingBar.color = Color.blue;
+			randomlyPickBtn ();
 		}
+
 	}
 
 }
