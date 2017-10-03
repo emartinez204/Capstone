@@ -17,14 +17,6 @@ public class Trajectory : MonoBehaviour
 
 	void Start ()
 	{
-		traj.value = 0;
-
-		startTraj (true);
-	}
-
-
-	void Update ()
-	{
 		if (GameManager.instance.usingController) {
 			stopButton = "joystick button 16";
 			trajText.text = "HIT 'A' TO STOP";
@@ -32,6 +24,15 @@ public class Trajectory : MonoBehaviour
 			stopButton = "space";
 			trajText.text = "HIT 'SPACEBAR' TO STOP";
 		}
+
+		traj.value = 0;
+
+		startTraj (false);
+	}
+
+
+	void Update ()
+	{
 
 		if (moveSlider) {
 			traj.value = Mathf.PingPong (Time.time, 1);
