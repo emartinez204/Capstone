@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class ButtonMash : MonoBehaviour
 {
@@ -14,21 +15,29 @@ public class ButtonMash : MonoBehaviour
 	public Image CenterBtn;
 
 	private Sprite[] btns;
+	private string[] keys;
+
+	public string[] xboxKeys;
+	public string[] keyKeys;
 
 	public bool userInputMatches = false;
+
+	private int correct = 0;
 
 
 
 	void Start ()
 	{
 		btns = new Sprite[4];
+		keys = new String[4];
+
 		CenterBtn.GetComponent<Image> ();
 		LoadingBar.GetComponent<Image> ();
 
 		if (GameManager.instance.usingController) {
-			UseArray (xboxBtns);
+			UseArray (xboxBtns, xboxKeys);
 		} else {
-			UseArray (keyBtns);
+			UseArray (keyBtns, keyKeys);
 		}
 
 		randomlyPickBtn ();
@@ -43,13 +52,14 @@ public class ButtonMash : MonoBehaviour
 			showButton (true);
 
 
-			StartCoroutine (fillBar ());
+			fillBar ();
 
 			checkForUserInput ();
 
 			if (userInputMatches) {
-				StopCoroutine (fillBar ());
-				StartCoroutine (fillBar ());
+				correct++;
+				LoadingBar.fillAmount = 0;
+				randomlyPickBtn ();
 				userInputMatches = false;
 			} 
 
@@ -60,10 +70,11 @@ public class ButtonMash : MonoBehaviour
 		
 	}
 
-	void UseArray (Sprite[] arr)
+	void UseArray (Sprite[] arr, string[] keys)
 	{
 		for (int i = 0; i < arr.Length; i++) {
 			btns [i] = arr [i];
+			this.keys [i] = keys [i];
 		}
 	}
 
@@ -74,44 +85,32 @@ public class ButtonMash : MonoBehaviour
 
 	void randomlyPickBtn ()
 	{
-		int rand = Random.Range (0, 3);
+		int rand = UnityEngine.Random.Range (0, 3);
 		CenterBtn.sprite = btns [rand];
 	}
 
 	void checkForUserInput ()
 	{
-		string curBtn = CenterBtn.sprite.ToString ();
-		string btn2Press = "space";
+		Sprite curBtn = CenterBtn.sprite;
+		string btn2Press = "";
 
-		if (curBtn == "aBtn") {
-			btn2Press = "joystick button 16";
-		} else if (curBtn == "bBtn") {
-			btn2Press = "joystick button 17";
-		} else if (curBtn == "xBtn") {
-			btn2Press = "joystick button 18";
-		} else if (curBtn == "yBtn") {
-			btn2Press = "joystick button 19";
-		} else if (curBtn == "arrowUp") {
-			btn2Press = "UpArrow";
-		} else if (curBtn == "arrowDown") {
-			btn2Press = "DownArrow";
-		} else if (curBtn == "arrowLeft") {
-			btn2Press = "LeftArrow";
-		} else if (curBtn == "arrowRight") {
-			btn2Press = "RightArrow";
+		for (var i = 0; i < keys.Length; i++) {
+			if (btns [i] == curBtn) {
+				btn2Press = keys [i];
+			}
 		}
-
+			
 		if (Input.GetKeyDown (btn2Press)) {
+			print ("Pressed correct button");
 			userInputMatches = true;
 		}
 	}
 
 
-	IEnumerator fillBar ()
+	void fillBar ()
 	{
-		//LoadingBar.fillAmount = Mathf.Lerp (0f, 1f, 0.4f * Time.time);
-		LoadingBar.fillAmount += 0.015f;
-		yield return new WaitForSecondsRealtime (0.1f);
+		LoadingBar.fillAmount += Time.deltaTime * 0.6f;
+	
 		if (LoadingBar.fillAmount >= 0.75f)
 			LoadingBar.color = Color.red;
 		if (LoadingBar.fillAmount == 1f) {

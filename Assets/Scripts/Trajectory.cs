@@ -27,6 +27,7 @@ public class Trajectory : MonoBehaviour
 
 		traj.value = 0;
 
+		showTrajBar (false);
 		startTraj (false);
 	}
 

@@ -53,6 +53,7 @@ public class Player : MonoBehaviour
 		Vector3 moveDirection = (inputH * right + inputV * forward) * speed * Time.deltaTime;
 
 		//controller.Move (moveDirection);  
+		moveDirection.y = rbody.velocity.y;
 
 		rbody.velocity = moveDirection;
 
