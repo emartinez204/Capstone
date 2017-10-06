@@ -1,0 +1,452 @@
+fileFormatVersion: 2
+guid: 704672201d0d2409ba504052fb5202a2
+timeCreated: 1507261408
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Base
+    100002: base
+    100004: base 1
+    100006: base 2
+    100008: base 3
+    100010: bed
+    100012: Bedroom
+    100014: blanket_a
+    100016: blanket_b
+    100018: bulb
+    100020: bulb 1
+    100022: cabinet
+    100024: chair
+    100026: Cube
+    100028: Cube (1)
+    100030: desk
+    100032: Door
+    100034: Door 1
+    100036: Door 2
+    100038: Door 3
+    100040: Door1
+    100042: door1
+    100044: door1 1
+    100046: Door2
+    100048: door2
+    100050: door2 1
+    100052: DoorInWall
+    100054: DoorInWall (1)
+    100056: DoorInWall (2)
+    100058: DoorInWall (3)
+    100060: DoorPrefab
+    100062: Doorway
+    100064: handle1
+    100066: handle2
+    100068: //RootNode
+    100070: lamp
+    100072: lamp (1)
+    100074: lighter
+    100076: LivingRoom
+    100078: mattress
+    100080: Office
+    100082: pillow
+    100084: pillow 1
+    100086: pillow 2
+    100088: pillow 3
+    100090: plafond
+    100092: plafond 1
+    100094: Plane
+    100096: Plane (1)
+    100098: Plane (2)
+    100100: Plane (3)
+    100102: Plane (4)
+    100104: Plane (5)
+    100106: Point light
+    100108: PTK_Stairs_Small
+    100110: PTK_Stairs_Small 1
+    100112: Roof
+    100114: Spotlight
+    100116: Spotlight 1
+    100118: tubes
+    100120: Wall
+    100122: Wall (1)
+    100124: Wall (10)
+    100126: Wall (2)
+    100128: Wall (3)
+    100130: Wall (4)
+    100132: Wall (5)
+    100134: Wall (6)
+    100136: Wall (7)
+    100138: Wall (8)
+    100140: Wall (9)
+    100142: Wall11
+    100144: Wall12
+    100146: Wall13
+    100148: wall_lighter
+    100150: WallL
+    100152: WallL 1
+    100154: WallL 2
+    100156: WallL 3
+    100158: WallR
+    100160: WallR 1
+    100162: WallR 2
+    100164: WallR 3
+    100166: WallT
+    100168: WallT 1
+    100170: WallT 2
+    100172: WallT 3
+    400000: Base
+    400002: base
+    400004: base 1
+    400006: base 2
+    400008: base 3
+    400010: bed
+    400012: Bedroom
+    400014: blanket_a
+    400016: blanket_b
+    400018: bulb
+    400020: bulb 1
+    400022: cabinet
+    400024: chair
+    400026: Cube
+    400028: Cube (1)
+    400030: desk
+    400032: Door
+    400034: Door 1
+    400036: Door 2
+    400038: Door 3
+    400040: Door1
+    400042: door1
+    400044: door1 1
+    400046: Door2
+    400048: door2
+    400050: door2 1
+    400052: DoorInWall
+    400054: DoorInWall (1)
+    400056: DoorInWall (2)
+    400058: DoorInWall (3)
+    400060: DoorPrefab
+    400062: Doorway
+    400064: handle1
+    400066: handle2
+    400068: //RootNode
+    400070: lamp
+    400072: lamp (1)
+    400074: lighter
+    400076: LivingRoom
+    400078: mattress
+    400080: Office
+    400082: pillow
+    400084: pillow 1
+    400086: pillow 2
+    400088: pillow 3
+    400090: plafond
+    400092: plafond 1
+    400094: Plane
+    400096: Plane (1)
+    400098: Plane (2)
+    400100: Plane (3)
+    400102: Plane (4)
+    400104: Plane (5)
+    400106: Point light
+    400108: PTK_Stairs_Small
+    400110: PTK_Stairs_Small 1
+    400112: Roof
+    400114: Spotlight
+    400116: Spotlight 1
+    400118: tubes
+    400120: Wall
+    400122: Wall (1)
+    400124: Wall (10)
+    400126: Wall (2)
+    400128: Wall (3)
+    400130: Wall (4)
+    400132: Wall (5)
+    400134: Wall (6)
+    400136: Wall (7)
+    400138: Wall (8)
+    400140: Wall (9)
+    400142: Wall11
+    400144: Wall12
+    400146: Wall13
+    400148: wall_lighter
+    400150: WallL
+    400152: WallL 1
+    400154: WallL 2
+    400156: WallL 3
+    400158: WallR
+    400160: WallR 1
+    400162: WallR 2
+    400164: WallR 3
+    400166: WallT
+    400168: WallT 1
+    400170: WallT 2
+    400172: WallT 3
+    2300000: base
+    2300002: base 1
+    2300004: base 2
+    2300006: base 3
+    2300008: blanket_a
+    2300010: blanket_b
+    2300012: bulb
+    2300014: bulb 1
+    2300016: cabinet
+    2300018: chair
+    2300020: Cube
+    2300022: Cube (1)
+    2300024: desk
+    2300026: Door
+    2300028: Door 1
+    2300030: Door 2
+    2300032: Door 3
+    2300034: door1
+    2300036: door1 1
+    2300038: door2
+    2300040: door2 1
+    2300042: DoorPrefab
+    2300044: handle1
+    2300046: handle2
+    2300048: lighter
+    2300050: mattress
+    2300052: pillow
+    2300054: pillow 1
+    2300056: pillow 2
+    2300058: pillow 3
+    2300060: plafond
+    2300062: plafond 1
+    2300064: Plane
+    2300066: Plane (1)
+    2300068: Plane (2)
+    2300070: Plane (3)
+    2300072: Plane (4)
+    2300074: Plane (5)
+    2300076: PTK_Stairs_Small
+    2300078: PTK_Stairs_Small 1
+    2300080: tubes
+    2300082: Wall
+    2300084: Wall (1)
+    2300086: Wall (10)
+    2300088: Wall (2)
+    2300090: Wall (3)
+    2300092: Wall (4)
+    2300094: Wall (5)
+    2300096: Wall (6)
+    2300098: Wall (7)
+    2300100: Wall (8)
+    2300102: Wall (9)
+    2300104: Wall11
+    2300106: Wall12
+    2300108: Wall13
+    2300110: WallL
+    2300112: WallL 1
+    2300114: WallL 2
+    2300116: WallL 3
+    2300118: WallR
+    2300120: WallR 1
+    2300122: WallR 2
+    2300124: WallR 3
+    2300126: WallT
+    2300128: WallT 1
+    2300130: WallT 2
+    2300132: WallT 3
+    3300000: base
+    3300002: base 1
+    3300004: base 2
+    3300006: base 3
+    3300008: blanket_a
+    3300010: blanket_b
+    3300012: bulb
+    3300014: bulb 1
+    3300016: cabinet
+    3300018: chair
+    3300020: Cube
+    3300022: Cube (1)
+    3300024: desk
+    3300026: Door
+    3300028: Door 1
+    3300030: Door 2
+    3300032: Door 3
+    3300034: door1
+    3300036: door1 1
+    3300038: door2
+    3300040: door2 1
+    3300042: DoorPrefab
+    3300044: handle1
+    3300046: handle2
+    3300048: lighter
+    3300050: mattress
+    3300052: pillow
+    3300054: pillow 1
+    3300056: pillow 2
+    3300058: pillow 3
+    3300060: plafond
+    3300062: plafond 1
+    3300064: Plane
+    3300066: Plane (1)
+    3300068: Plane (2)
+    3300070: Plane (3)
+    3300072: Plane (4)
+    3300074: Plane (5)
+    3300076: PTK_Stairs_Small
+    3300078: PTK_Stairs_Small 1
+    3300080: tubes
+    3300082: Wall
+    3300084: Wall (1)
+    3300086: Wall (10)
+    3300088: Wall (2)
+    3300090: Wall (3)
+    3300092: Wall (4)
+    3300094: Wall (5)
+    3300096: Wall (6)
+    3300098: Wall (7)
+    3300100: Wall (8)
+    3300102: Wall (9)
+    3300104: Wall11
+    3300106: Wall12
+    3300108: Wall13
+    3300110: WallL
+    3300112: WallL 1
+    3300114: WallL 2
+    3300116: WallL 3
+    3300118: WallR
+    3300120: WallR 1
+    3300122: WallR 2
+    3300124: WallR 3
+    3300126: WallT
+    3300128: WallT 1
+    3300130: WallT 2
+    3300132: WallT 3
+    4300000: Plane
+    4300002: Plane (1)
+    4300004: Plane (2)
+    4300006: Plane (3)
+    4300008: Plane (4)
+    4300010: Plane (5)
+    4300012: WallR
+    4300014: WallT
+    4300016: Door
+    4300018: WallL
+    4300020: WallR
+    4300022: WallT
+    4300024: Door
+    4300026: WallL
+    4300028: Wall
+    4300030: Wall (1)
+    4300032: Wall11
+    4300034: Wall12
+    4300036: Wall13
+    4300038: DoorPrefab
+    4300040: Wall (2)
+    4300042: Wall (3)
+    4300044: WallR
+    4300046: WallT
+    4300048: Door
+    4300050: WallL
+    4300052: Wall (4)
+    4300054: WallR
+    4300056: WallT
+    4300058: Door
+    4300060: WallL
+    4300062: base
+    4300064: bulb
+    4300066: plafond
+    4300068: base
+    4300070: bulb
+    4300072: plafond
+    4300074: Wall (5)
+    4300076: Wall (6)
+    4300078: Wall (7)
+    4300080: cabinet
+    4300082: door1
+    4300084: door2
+    4300086: desk
+    4300088: door1
+    4300090: handle1
+    4300092: door2
+    4300094: handle2
+    4300096: chair
+    4300098: base
+    4300100: lighter
+    4300102: tubes
+    4300104: base
+    4300106: blanket_a
+    4300108: blanket_b
+    4300110: mattress
+    4300112: pillow
+    4300114: pillow 1
+    4300116: pillow 2
+    4300118: pillow 3
+    4300120: Wall (8)
+    4300122: Wall (10)
+    4300124: Wall (9)
+    4300126: Cube
+    4300128: Cube (1)
+    4300130: PTK_Stairs_Small
+    4300132: PTK_Stairs_Small
+  materials:
+    importMaterials: 1
+    materialName: 1
+    materialSearch: 2
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
