@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditorInternal;
 using UnityEngine.UI;
+using UnityEngine.Rendering;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,8 +15,12 @@ public class GameManager : MonoBehaviour
 	public bool musicOn;
 	public float musicVolume;
 
-	public Camera cam1;
-	public Camera cam2;
+	public Camera canvasCam;
+	public Camera playerCam;
+	public Camera movieCam;
+	public Camera miniGame1;
+	public Camera miniGame2;
+	public Camera miniGame3;
 
 
 	void Awake ()
@@ -31,25 +36,50 @@ public class GameManager : MonoBehaviour
 		//usingController = false;
 
 		if (DEBUG)
-			showCam2 ();
+			useCamera ("player");
 		else
-			showCam1 ();
+			useCamera ("canvas");
 
 		musicOn = true;
 		musicVolume = 0.5f;
 
 	}
 
-	public void showCam1 ()
+	public void useCamera (string cam)
 	{
-		cam1.enabled = true;
-		cam2.enabled = false;
+		disableCams ();
+		switch (cam) {
+		case "canvas":
+			canvasCam.enabled = true;
+			break;
+		case "player":
+			playerCam.enabled = true;
+			break;
+		case "movie":
+			movieCam.enabled = true;
+			break;
+		case "miniGame1":
+			miniGame1.enabled = true;
+			break;
+		case "miniGame2":
+			miniGame2.enabled = true;
+			break;
+		case "miniGame3":
+			miniGame3.enabled = true;
+			break;
+		}
+
+
 	}
 
-	public void showCam2 ()
+	private void disableCams ()
 	{
-		cam1.enabled = false;
-		cam2.enabled = true;
+		canvasCam.enabled = false;
+		playerCam.enabled = false;
+		movieCam.enabled = false;
+		miniGame1.enabled = false;
+		miniGame2.enabled = false;
+		miniGame3.enabled = false;
 	}
 
 	public void toggleController ()
