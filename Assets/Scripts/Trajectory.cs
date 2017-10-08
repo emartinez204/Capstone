@@ -7,15 +7,64 @@ using System.Security.AccessControl;
 
 public class Trajectory : MonoBehaviour
 {
-
+	public GameObject trajectoryBar;
 	public Slider traj;
 	public Text trajText;
+	public bool moveSlider = false;
 
 	private string stopButton;
-	private bool moveSlider = false;
 	private float throwValue;
 
+	//Chances to hit bird
+	private int numThrows = 5;
+
+	private int curThrows = 0;
+
 	void Start ()
+	{
+		checkController ();
+
+		traj.value = 0;
+
+		showTrajBar (false);
+	}
+
+
+	void Update ()
+	{
+		checkController ();
+
+		if (moveSlider) {
+			showTrajBar (true);
+			traj.value = Mathf.PingPong (Time.time, 1);
+
+			if (Input.GetKeyDown (stopButton)) {
+				curThrows++;
+				moveSlider = false;
+				throwValue = traj.value;
+
+				//animation of robot throwing pitchfork at bird
+				StartCoroutine (wait ());
+
+			}
+
+		}
+		
+	}
+
+	IEnumerator wait ()
+	{
+		
+		if (curThrows == numThrows) {
+			showTrajBar (false);
+		} else {
+			yield return new WaitForSeconds (3);
+			moveSlider = true;
+			//once animation over, start slider again
+		}
+	}
+
+	void checkController ()
 	{
 		if (GameManager.instance.usingController) {
 			stopButton = "joystick button 16";
@@ -24,38 +73,19 @@ public class Trajectory : MonoBehaviour
 			stopButton = "space";
 			trajText.text = "HIT 'SPACEBAR' TO STOP";
 		}
-
-		traj.value = 0;
-
-		showTrajBar (false);
-		startTraj (false);
-	}
-
-
-	void Update ()
-	{
-
-		if (moveSlider) {
-			traj.value = Mathf.PingPong (Time.time, 1);
-
-			if (Input.GetKeyDown (stopButton)) {
-				startTraj (false);
-				throwValue = traj.value;
-			}
-
-		}
-		
-	}
-
-	public void startTraj (bool val)
-	{
-		moveSlider = val;
 	}
 
 	public void showTrajBar (bool val)
 	{
-		traj.enabled = val;
+		trajectoryBar.SetActive (val);
 	}
 
+
+	public void reset ()
+	{
+		traj.value = 0;
+		showTrajBar (false);
+		moveSlider = false;
+	}
 
 }

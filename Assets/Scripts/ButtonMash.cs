@@ -22,7 +22,9 @@ public class ButtonMash : MonoBehaviour
 
 	public bool userInputMatches = false;
 
-	private int correct = 0;
+	private int numButtons = 10;
+	public int curButton = 0;
+	public int correct = 0;
 
 
 
@@ -34,11 +36,7 @@ public class ButtonMash : MonoBehaviour
 		CenterBtn.GetComponent<Image> ();
 		LoadingBar.GetComponent<Image> ();
 
-		if (GameManager.instance.usingController) {
-			UseArray (xboxBtns, xboxKeys);
-		} else {
-			UseArray (keyBtns, keyKeys);
-		}
+		checkController ();
 
 		randomlyPickBtn ();
 		showButton (false);
@@ -48,26 +46,47 @@ public class ButtonMash : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		checkController ();
+
 		if (beginButtonMash) {
+			GameManager.instance.player.GetComponent <Player> ().enabled = false;
 			showButton (true);
 
+			if (curButton <= numButtons) {
+				fillBar ();
 
-			fillBar ();
+				checkForUserInput ();
 
-			checkForUserInput ();
+				if (userInputMatches && LoadingBar.fillAmount < 1) {
+					matchedButton ();
+				} 
 
-			if (userInputMatches) {
-				correct++;
-				LoadingBar.fillAmount = 0;
-				randomlyPickBtn ();
-				userInputMatches = false;
-			} 
-
+			} else {
+				//shown all buttons, check how many correct
+				if (correct == numButtons) {
+					print ("perfect score!");
+				} else {
+					float percent = ((float)correct / (float)numButtons) * 100;
+					print ("percent correct = " + percent);
+				}
+				beginButtonMash = false;
+			}
+				
 
 		} else {
 			showButton (false);
+			GameManager.instance.player.GetComponent <Player> ().enabled = true;
 		}
 		
+	}
+
+	void checkController ()
+	{
+		if (GameManager.instance.usingController) {
+			UseArray (xboxBtns, xboxKeys);
+		} else {
+			UseArray (keyBtns, keyKeys);
+		}
 	}
 
 	void UseArray (Sprite[] arr, string[] keys)
@@ -101,9 +120,8 @@ public class ButtonMash : MonoBehaviour
 		}
 			
 		if (Input.GetKeyDown (btn2Press)) {
-			print ("Pressed correct button");
 			userInputMatches = true;
-		}
+		} 
 	}
 
 
@@ -114,6 +132,8 @@ public class ButtonMash : MonoBehaviour
 		if (LoadingBar.fillAmount >= 0.75f)
 			LoadingBar.color = Color.red;
 		if (LoadingBar.fillAmount == 1f) {
+			if (!userInputMatches)
+				curButton++;
 			LoadingBar.fillAmount = 0f;
 			LoadingBar.color = Color.blue;
 			randomlyPickBtn ();
@@ -121,4 +141,20 @@ public class ButtonMash : MonoBehaviour
 
 	}
 
+	void matchedButton ()
+	{
+		correct++;
+		curButton++;
+		//show animation of robot hitting bird
+		LoadingBar.fillAmount = 0;
+		randomlyPickBtn ();
+		userInputMatches = false;
+	}
+
+	public void reset ()
+	{
+		curButton = 0;
+		correct = 0;
+		LoadingBar.fillAmount = 0f;
+	}
 }

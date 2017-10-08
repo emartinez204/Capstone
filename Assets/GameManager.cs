@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditorInternal;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
+using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class GameManager : MonoBehaviour
 	public static GameManager instance = null;
 	public bool DEBUG;
 	public bool usingController;
+
+	public GameObject player;
 
 	public bool musicOn;
 	public float musicVolume;
