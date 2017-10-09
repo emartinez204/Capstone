@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using NUnit.Framework;
 
 public class CamMove : MonoBehaviour
 {
@@ -10,25 +12,44 @@ public class CamMove : MonoBehaviour
 	public float offY;
 	public float distance;
 
+	public Material transparent;
+	public Material originalMat;
+
 	private float rotateH;
 	private float rotateV;
 
-	private float maxUp = 60F;
-	private float maxDown = -60F;
+	LayerMask mask;
 
+	public GameObject curObj = null;
+	public GameObject prevObj = null;
 
-	private Quaternion originalRotation;
+	public GameObject[] clippables;
 
 
 	void Start ()
 	{
-		originalRotation = transform.localRotation;
-
 		offset = transform.position - focus.transform.position;
 		offset.y = offY;
 		offset.z = -distance;
 		offset.x = 0;
 
+		mask = 1 << LayerMask.NameToLayer ("Clippable");
+
+		clippables = GetClippableWalls ();
+
+	}
+
+	GameObject[] GetClippableWalls ()
+	{
+		GameObject[] gos = FindObjectsOfType (typeof(GameObject)) as GameObject[];
+		List<GameObject> walls = new List<GameObject> ();
+
+		for (int i = 0; i < gos.Length; i++) {
+			if (gos [i].layer == 9) {
+				walls.Add (gos [i]);
+			}
+		}
+		return walls.ToArray ();
 	}
 
 
@@ -46,7 +67,7 @@ public class CamMove : MonoBehaviour
 			rotateV = Input.GetAxis ("RotateCamVK");
 		}
 
-		float lookUp = rotateV * 30 * Time.deltaTime, maxDown, maxUp;
+		float lookUp = rotateV * 30 * Time.deltaTime;
 
 		transform.RotateAround (focus.transform.position, Vector3.up, rotateH * 30 * Time.deltaTime);
 		transform.RotateAround (focus.transform.position, transform.right, lookUp);
@@ -54,14 +75,29 @@ public class CamMove : MonoBehaviour
 
 		offset = transform.position - focus.transform.position;
 
+		showWalls ();
+
+		RaycastHit hit;
+		if (Physics.Linecast (transform.position, focus.transform.position, out hit, mask)) {
+			hit.transform.gameObject.GetComponent<Renderer> ().material = transparent;
+		} 
+
+			
+	}
+
+	void showWalls ()
+	{
+		for (int i = 0; i < clippables.Length; i++) {
+			clippables [i].GetComponent<Renderer> ().material = originalMat;
+		}
 	}
 
 	static float ClampAngle (float angle, float min, float max)
 	{
-		if (angle < -360)
-			angle += 360;
-		if (angle > 360)
-			angle -= 360;
+		if (angle < -180)
+			angle += 180;
+		if (angle > 180)
+			angle -= 180;
 		return Mathf.Clamp (angle, min, max);
 	}
 
