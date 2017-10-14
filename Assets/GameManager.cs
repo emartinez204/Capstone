@@ -25,6 +25,15 @@ public class GameManager : MonoBehaviour
 	public Camera miniGame2;
 	public Camera miniGame3;
 
+	public GameObject[] storyItems;
+	public GameObject currItem;
+
+	public Material[] regularMats;
+	public Material[] glowMats;
+
+
+	private int currItemIndex = 0;
+
 
 	void Awake ()
 	{
@@ -46,6 +55,22 @@ public class GameManager : MonoBehaviour
 		musicOn = true;
 		musicVolume = 0.5f;
 
+		setCurrItem (currItemIndex);
+
+	}
+
+	private void resetMats ()
+	{
+		for (int i = 0; i < storyItems.Length; i++) {
+			storyItems [i].GetComponent<MeshRenderer> ().material = regularMats [i];
+		}
+	}
+
+	public void setCurrItem (int index)
+	{
+		resetMats ();
+		currItem = storyItems [index];
+		currItem.GetComponent<MeshRenderer> ().material = glowMats [index];
 	}
 
 	public void useCamera (string cam)
