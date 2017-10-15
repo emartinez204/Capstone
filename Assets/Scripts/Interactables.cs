@@ -9,15 +9,15 @@ public class Interactables : MonoBehaviour
 	public Text itemTxt;
 
 	private string buttonTxt;
-	private string openDoor;
+	private string interact;
 
 	void Update ()
 	{
 		if (GameManager.instance.usingController) {
-			openDoor = "joystick button 16";
+			interact = "joystick button 16";
 			buttonTxt = "Press A";
 		} else {
-			openDoor = "e";
+			interact = "e";
 			buttonTxt = "Press E";
 		}
 	}
@@ -25,20 +25,25 @@ public class Interactables : MonoBehaviour
 	void OnTriggerEnter (Collider other)
 	{
 		if (other.tag == "Interactable") {
-			itemTxt.text = "This is a " + other.gameObject.name.ToString ();
+			itemTxt.text = "This is a " + other.gameObject.name.ToString () + ". ";
+
+			if (other.gameObject.name.ToString () == "pitchfork") {
+				itemTxt.text += buttonTxt + " to pick up.";
+			}
 		}
 
 		if (other.tag == "Door") {
 			itemTxt.text = "Enter next room? " + buttonTxt;
 			other.GetComponent<Door> ().Move ();
 		}
+
 	}
 
 	void OnTriggerStay (Collider other)
 	{
 		if (other.tag == "Door") {
 
-			if (Input.GetKeyDown (openDoor)) {
+			if (Input.GetKeyDown (interact)) {
 				print ("hitting enter");
 				//open door
 
@@ -46,6 +51,11 @@ public class Interactables : MonoBehaviour
 					StartCoroutine (other.GetComponent<Door> ().Move ());
 				
 			}
+		}
+
+		if (other.gameObject.name.ToString () == "pitchfork") {
+			if (Input.GetKeyDown (interact))
+				other.GetComponent<Pitchfork> ().pickup (this);
 		}
 	}
 
