@@ -91,14 +91,5 @@ public class CamMove : MonoBehaviour
 			clippables [i].GetComponent<Renderer> ().material = originalMat;
 		}
 	}
-
-	static float ClampAngle (float angle, float min, float max)
-	{
-		if (angle < -180)
-			angle += 180;
-		if (angle > 180)
-			angle -= 180;
-		return Mathf.Clamp (angle, min, max);
-	}
-
+		
 }
