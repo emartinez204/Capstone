@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour
 
 	}
 
-	private void resetMats ()
+	public void resetMats ()
 	{
 		for (int i = 0; i < storyItems.Length; i++) {
 			storyItems [i].GetComponent<MeshRenderer> ().material = regularMats [i];

@@ -54,8 +54,10 @@ public class Interactables : MonoBehaviour
 		}
 
 		if (other.gameObject.name.ToString () == "pitchfork") {
-			if (Input.GetKeyDown (interact))
-				other.GetComponent<Pitchfork> ().pickup (this);
+			if (Input.GetKeyDown (interact)) {
+				GameManager.instance.resetMats ();
+				other.GetComponent<Pitchfork> ().pickup ();
+			}
 		}
 	}
 

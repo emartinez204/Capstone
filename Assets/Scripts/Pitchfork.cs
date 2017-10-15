@@ -7,7 +7,7 @@ public class Pitchfork : MonoBehaviour
 {
 	bool holding = false;
 
-	private Transform grabber;
+	public GameObject grabber;
 	// Use this for initialization
 	void Start ()
 	{
@@ -17,16 +17,14 @@ public class Pitchfork : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-//		if (holding) {
-//			Vector3 pos = new Vector3 (grabber.position.x, grabber.position.y, grabber.position.z);
-//			transform.position = pos;
-//		}
+		if (holding) {
+			
+		}
 	}
 
-	public void pickup (GameObject grabber)
+	public void pickup ()
 	{
-//		this.grabber = grabber;
-//		holding = !holding;
-		transform.parent = grabber.transform;
+		holding = !holding;
+		this.transform.parent = grabber.transform;
 	}
 }
