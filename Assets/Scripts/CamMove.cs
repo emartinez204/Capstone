@@ -72,6 +72,9 @@ public class CamMove : MonoBehaviour
 		transform.RotateAround (focus.transform.position, Vector3.up, rotateH * 30 * Time.deltaTime);
 		transform.RotateAround (focus.transform.position, transform.right, lookUp);
 
+//		Vector3 angles = transform.eulerAngles;
+//		angles.x += lookUp;
+//		transform.eulerAngles = angles;
 
 		offset = transform.position - focus.transform.position;
 
@@ -79,7 +82,8 @@ public class CamMove : MonoBehaviour
 
 		RaycastHit hit;
 		if (Physics.Linecast (transform.position, focus.transform.position, out hit, mask)) {
-			hit.transform.gameObject.GetComponent<Renderer> ().material = transparent;
+			//hit.transform.gameObject.GetComponent<Renderer> ().material = transparent;
+			hit.transform.gameObject.GetComponent<MeshRenderer> ().enabled = false;
 		} 
 
 			
@@ -88,7 +92,8 @@ public class CamMove : MonoBehaviour
 	void showWalls ()
 	{
 		for (int i = 0; i < clippables.Length; i++) {
-			clippables [i].GetComponent<Renderer> ().material = originalMat;
+			//clippables [i].GetComponent<Renderer> ().material = originalMat;
+			clippables [i].GetComponent<MeshRenderer> ().enabled = true;
 		}
 	}
 		
