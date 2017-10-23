@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 	public bool usingController;
 
 	public GameObject player;
+	public GameObject arrow;
 
 	public bool musicOn;
 	public float musicVolume;
@@ -71,6 +72,8 @@ public class GameManager : MonoBehaviour
 		resetMats ();
 		currItem = storyItems [index];
 		currItem.GetComponent<MeshRenderer> ().material = glowMats [index];
+		arrow.GetComponent<Float> ().setPos (new Vector3 (currItem.transform.position.x, currItem.transform.position.y + 2, currItem.transform.position.z));
+
 	}
 
 	public void useCamera (string cam)

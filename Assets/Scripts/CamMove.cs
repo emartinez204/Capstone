@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using NUnit.Framework;
+using System.Collections.Specialized;
+using System.Threading;
+
 
 public class CamMove : MonoBehaviour
 {
@@ -24,6 +27,9 @@ public class CamMove : MonoBehaviour
 	public GameObject prevObj = null;
 
 	public GameObject[] clippables;
+
+	private float lookHorizontal;
+	private float lookUp;
 
 
 	void Start ()
@@ -55,10 +61,6 @@ public class CamMove : MonoBehaviour
 
 	void LateUpdate ()
 	{
-		//follows player
-		transform.position = focus.transform.position + offset;
-
-		//rotate camera
 		if (GameManager.instance.usingController) {
 			rotateH = Input.GetAxis ("RotateCamHJ");
 			rotateV = Input.GetAxis ("RotateCamVJ");
@@ -67,16 +69,32 @@ public class CamMove : MonoBehaviour
 			rotateV = Input.GetAxis ("RotateCamVK");
 		}
 
-		float lookUp = rotateV * 30 * Time.deltaTime;
+		transform.position = focus.transform.position - (Vector3.forward * distance) + (Vector3.up * offY);
+		transform.rotation = Quaternion.identity;
 
-		transform.RotateAround (focus.transform.position, Vector3.up, rotateH * 30 * Time.deltaTime);
+		lookHorizontal += rotateH * Time.time;
+		lookUp += rotateV * Time.time;
+
+		lookHorizontal = Mathf.Repeat (lookHorizontal, 360);
+		lookUp = Mathf.Clamp (lookUp, 0, 80);
+
+		transform.RotateAround (focus.transform.position, Vector3.up, lookHorizontal);
 		transform.RotateAround (focus.transform.position, transform.right, lookUp);
 
-//		Vector3 angles = transform.eulerAngles;
-//		angles.x += lookUp;
-//		transform.eulerAngles = angles;
 
-		offset = transform.position - focus.transform.position;
+//		transform.position = focus.transform.position + offset;
+//
+//
+//		float lookUp = rotateV * 30 * Time.deltaTime;
+//
+//		transform.RotateAround (focus.transform.position, Vector3.up, rotateH * 30 * Time.deltaTime);
+//		transform.RotateAround (focus.transform.position, transform.right, lookUp);
+//
+//	
+//
+//		offset = transform.position - focus.transform.position;
+
+
 
 		showWalls ();
 
