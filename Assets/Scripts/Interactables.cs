@@ -25,7 +25,7 @@ public class Interactables : MonoBehaviour
 	void OnTriggerEnter (Collider other)
 	{
 		if (other.tag == "Interactable") {
-			itemTxt.text = "This is a " + other.gameObject.name.ToString () + ". ";
+			itemTxt.text = other.gameObject.name.ToString ().ToUpper () + ". . . ";
 
 			if (other.gameObject.name.ToString () == "pitchfork") {
 				itemTxt.text += buttonTxt + " to pick up.";
@@ -57,6 +57,7 @@ public class Interactables : MonoBehaviour
 			if (Input.GetKeyDown (interact)) {
 				GameManager.instance.resetMats ();
 				other.GetComponent<Pitchfork> ().pickup ();
+				GameManager.instance.nextItem ();
 			}
 		}
 	}

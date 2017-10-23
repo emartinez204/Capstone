@@ -20,7 +20,7 @@ public class Float : MonoBehaviour
 	void Update ()
 	{
 		if (floating) {
-			tempPos.y += Mathf.Sin (Time.fixedTime * Mathf.PI * 1f) * 0.01f;
+			tempPos.y += Mathf.Sin (Time.fixedTime * Mathf.PI * 1f) * 0.03f;
 			transform.position = tempPos;
 		}
 		
@@ -29,7 +29,7 @@ public class Float : MonoBehaviour
 	public void setPos (Vector3 pos)
 	{
 		floating = false;
-		transform.position = pos;
+		tempPos = pos;
 		floating = true;
 	}
 }

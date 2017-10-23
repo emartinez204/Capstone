@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.Security.Cryptography;
 
 
 
@@ -20,6 +21,7 @@ public class Player : MonoBehaviour
 	void Start ()
 	{
 		rbody = GetComponent<Rigidbody> ();
+		transform.rotation = Quaternion.Euler (0, -90, 0);
 	}
 
 
@@ -38,17 +40,19 @@ public class Player : MonoBehaviour
 //		float moveZ = inputV * speed * Time.deltaTime;
 //
 //		rbody.velocity = new Vector3 (moveX, 0, moveZ);
+		//transform.rotation = Quaternion.Euler (0, -90, 0);
 
 		Vector3 relativePos = cam.transform.TransformDirection (new Vector3 (inputH, inputV));
-		relativePos.y = 0.0f;
+		relativePos.y = 0f;
 		Quaternion rotation = Quaternion.LookRotation (relativePos);
 		transform.rotation = Quaternion.Lerp (transform.rotation, rotation, Time.deltaTime * turnSpeed);
 
 
 		Vector3 forward = cam.transform.TransformDirection (Vector3.forward);
-		forward.y = 0;
+		forward.y = 0f;
 		forward = forward.normalized;
 		Vector3 right = new Vector3 (forward.z, 0, -forward.x);
+
 
 		Vector3 moveDirection = (inputH * right + inputV * forward) * speed * Time.deltaTime;
 

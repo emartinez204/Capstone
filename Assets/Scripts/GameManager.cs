@@ -72,8 +72,19 @@ public class GameManager : MonoBehaviour
 		resetMats ();
 		currItem = storyItems [index];
 		currItem.GetComponent<MeshRenderer> ().material = glowMats [index];
-		arrow.GetComponent<Float> ().setPos (new Vector3 (currItem.transform.position.x, currItem.transform.position.y + 2, currItem.transform.position.z));
+		arrow.GetComponent<Float> ().setPos (new Vector3 (currItem.transform.position.x, currItem.transform.position.y + 2.5f, currItem.transform.position.z));
 
+	}
+
+	public void showArrow (bool val)
+	{
+		arrow.SetActive (val);
+	}
+
+	public void nextItem ()
+	{
+		currItemIndex++;
+		setCurrItem (currItemIndex);
 	}
 
 	public void useCamera (string cam)

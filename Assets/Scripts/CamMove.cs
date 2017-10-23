@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using NUnit.Framework;
-using System.Collections.Specialized;
-using System.Threading;
+using System.Security.Cryptography;
+
 
 
 public class CamMove : MonoBehaviour
@@ -20,6 +19,7 @@ public class CamMove : MonoBehaviour
 
 	private float rotateH;
 	private float rotateV;
+	private float zoom;
 
 	LayerMask mask;
 
@@ -34,11 +34,12 @@ public class CamMove : MonoBehaviour
 
 	void Start ()
 	{
-		offset = transform.position - focus.transform.position;
-		offset.y = offY;
-		offset.z = -distance;
-		offset.x = 0;
+//		offset = transform.position - focus.transform.position;
+//		offset.y = offY;
+//		offset.z = -distance;
+//		offset.x = 0;
 
+	
 		mask = 1 << LayerMask.NameToLayer ("Clippable");
 
 		clippables = GetClippableWalls ();
@@ -64,19 +65,26 @@ public class CamMove : MonoBehaviour
 		if (GameManager.instance.usingController) {
 			rotateH = Input.GetAxis ("RotateCamHJ");
 			rotateV = Input.GetAxis ("RotateCamVJ");
+			zoom = Input.GetAxis ("ZoomJ");
 		} else {
 			rotateH = Input.GetAxis ("RotateCamHK");
 			rotateV = Input.GetAxis ("RotateCamVK");
+			zoom = Input.GetAxis ("ZoomK");
 		}
+		distance += zoom;
+		distance = Mathf.Clamp (distance, 4, 10);
 
-		transform.position = focus.transform.position - (Vector3.forward * distance) + (Vector3.up * offY);
-		transform.rotation = Quaternion.identity;
+		transform.position = focus.transform.position - (Vector3.right * distance) + (Vector3.up * offY);
+		transform.rotation = Quaternion.Euler (0, 90, 0);
 
-		lookHorizontal += rotateH * Time.time;
-		lookUp += rotateV * Time.time;
+//		transform.position = focus.transform.position - (Vector3.forward * distance) + (Vector3.up * offY);
+//		transform.rotation = Quaternion.identity;
+
+		lookHorizontal += rotateH * Time.deltaTime * 30;
+		lookUp += rotateV * Time.deltaTime * 30;
 
 		lookHorizontal = Mathf.Repeat (lookHorizontal, 360);
-		lookUp = Mathf.Clamp (lookUp, 0, 80);
+		lookUp = Mathf.Clamp (lookUp, -5, 80);
 
 		transform.RotateAround (focus.transform.position, Vector3.up, lookHorizontal);
 		transform.RotateAround (focus.transform.position, transform.right, lookUp);
