@@ -14,14 +14,20 @@ public class Player : MonoBehaviour
 	public float speed;
 	public float turnSpeed;
 
+	public Transform spot1;
+	public Transform spot2;
+	public Transform spot3;
+
 	private float inputH;
 	private float inputV;
+
+	public bool canMove;
 
 
 	void Start ()
 	{
 		rbody = GetComponent<Rigidbody> ();
-		transform.rotation = Quaternion.Euler (0, -90, 0);
+		canMove = true;
 	}
 
 
@@ -42,24 +48,31 @@ public class Player : MonoBehaviour
 //		rbody.velocity = new Vector3 (moveX, 0, moveZ);
 		//transform.rotation = Quaternion.Euler (0, -90, 0);
 
-		Vector3 relativePos = cam.transform.TransformDirection (new Vector3 (inputH, inputV));
-		relativePos.y = 0f;
-		Quaternion rotation = Quaternion.LookRotation (relativePos);
-		transform.rotation = Quaternion.Lerp (transform.rotation, rotation, Time.deltaTime * turnSpeed);
+		if (canMove) {
+			rbody.constraints = RigidbodyConstraints.None;
+
+			Vector3 relativePos = cam.transform.TransformDirection (new Vector3 (inputH, inputV));
+			relativePos.y = 0f;
+			Quaternion rotation = Quaternion.LookRotation (relativePos);
+			transform.rotation = Quaternion.Lerp (transform.rotation, rotation, Time.deltaTime * turnSpeed);
 
 
-		Vector3 forward = cam.transform.TransformDirection (Vector3.forward);
-		forward.y = 0f;
-		forward = forward.normalized;
-		Vector3 right = new Vector3 (forward.z, 0, -forward.x);
+			Vector3 forward = cam.transform.TransformDirection (Vector3.forward);
+			forward.y = 0f;
+			forward = forward.normalized;
+			Vector3 right = new Vector3 (forward.z, 0, -forward.x);
 
 
-		Vector3 moveDirection = (inputH * right + inputV * forward) * speed * Time.deltaTime;
+			Vector3 moveDirection = (inputH * right + inputV * forward) * speed * Time.deltaTime;
 
-		//controller.Move (moveDirection);  
-		moveDirection.y = rbody.velocity.y;
+			//controller.Move (moveDirection);  
+			moveDirection.y = rbody.velocity.y;
 
-		rbody.velocity = moveDirection;
+			rbody.velocity = moveDirection;
+		} else {
+			rbody.position = spot1.position;
+			rbody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
+		}
 
 
 	}

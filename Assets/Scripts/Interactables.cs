@@ -20,6 +20,8 @@ public class Interactables : MonoBehaviour
 			interact = "e";
 			buttonTxt = "Press E";
 		}
+
+
 	}
 
 	void OnTriggerEnter (Collider other)
@@ -37,6 +39,10 @@ public class Interactables : MonoBehaviour
 			other.GetComponent<Door> ().Move ();
 		}
 
+		if (other.tag == "miniGame1" && GameManager.instance.currItem.gameObject.name.ToString () == "Door1") {
+			GameManager.instance.startMiniGame1 ();
+		}
+
 	}
 
 	void OnTriggerStay (Collider other)
@@ -44,8 +50,6 @@ public class Interactables : MonoBehaviour
 		if (other.tag == "Door") {
 
 			if (Input.GetKeyDown (interact)) {
-				print ("hitting enter");
-				//open door
 
 				if (other.GetComponent<Door> ().RotationPending == false)
 					StartCoroutine (other.GetComponent<Door> ().Move ());
@@ -66,4 +70,6 @@ public class Interactables : MonoBehaviour
 	{
 		itemTxt.text = "";
 	}
+
+
 }

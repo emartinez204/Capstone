@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
 	public bool musicOn;
 	public float musicVolume;
 
+	public Canvas gameItems;
 	public Camera canvasCam;
 	public Camera playerCam;
 	public Camera movieCam;
@@ -35,6 +36,9 @@ public class GameManager : MonoBehaviour
 
 	private int currItemIndex = 0;
 
+	private ButtonMash buttonMash;
+	private Trajectory trajectory;
+
 
 	void Awake ()
 	{
@@ -44,6 +48,9 @@ public class GameManager : MonoBehaviour
 			Destroy (gameObject);
 
 		DontDestroyOnLoad (gameObject);
+
+		buttonMash = GetComponent<ButtonMash> ();
+		trajectory = GetComponent<Trajectory> ();
 
 		//default
 		//usingController = false;
@@ -60,6 +67,34 @@ public class GameManager : MonoBehaviour
 
 	}
 
+	public void startMiniGame1 ()
+	{
+		
+		gameItems.worldCamera = miniGame1;
+		useCamera ("miniGame1");
+		player.GetComponent<Player> ().canMove = false;
+		buttonMash.beginButtonMash = true;
+		currItemIndex++;
+		setCurrItem (currItemIndex);
+	}
+
+	public void endMiniGame ()
+	{
+		gameItems.worldCamera = playerCam;
+		useCamera ("player");
+		player.GetComponent<Player> ().canMove = true;
+	}
+
+	public void startMiniGame2 ()
+	{
+		currItemIndex++;
+		setCurrItem (currItemIndex);
+		gameItems.worldCamera = miniGame2;
+		useCamera ("miniGame2");
+		buttonMash.beginButtonMash = true;
+	}
+
+
 	public void resetMats ()
 	{
 		for (int i = 0; i < storyItems.Length; i++) {
@@ -75,6 +110,7 @@ public class GameManager : MonoBehaviour
 		arrow.GetComponent<Float> ().setPos (new Vector3 (currItem.transform.position.x, currItem.transform.position.y + 2.5f, currItem.transform.position.z));
 
 	}
+
 
 	public void showArrow (bool val)
 	{

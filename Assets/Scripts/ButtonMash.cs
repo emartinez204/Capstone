@@ -49,7 +49,7 @@ public class ButtonMash : MonoBehaviour
 		checkController ();
 
 		if (beginButtonMash) {
-			GameManager.instance.player.GetComponent <Player> ().enabled = false;
+			//GameManager.instance.player.GetComponent <Player> ().enabled = false;
 			showButton (true);
 
 			if (curButton <= numButtons) {
@@ -75,7 +75,8 @@ public class ButtonMash : MonoBehaviour
 
 		} else {
 			showButton (false);
-			GameManager.instance.player.GetComponent <Player> ().enabled = true;
+			//GameManager.instance.player.GetComponent <Player> ().enabled = true;
+			GameManager.instance.endMiniGame ();
 		}
 		
 	}
