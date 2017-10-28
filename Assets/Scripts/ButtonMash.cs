@@ -22,7 +22,7 @@ public class ButtonMash : MonoBehaviour
 
 	public bool userInputMatches = false;
 
-	private int numButtons = 10;
+	private int numButtons = 15;
 	public int curButton = 0;
 	public int correct = 0;
 
@@ -128,7 +128,7 @@ public class ButtonMash : MonoBehaviour
 
 	void fillBar ()
 	{
-		LoadingBar.fillAmount += Time.deltaTime * 0.6f;
+		LoadingBar.fillAmount += Time.deltaTime * 0.3f;
 	
 		if (LoadingBar.fillAmount >= 0.75f)
 			LoadingBar.color = Color.red;

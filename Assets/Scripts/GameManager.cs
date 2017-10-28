@@ -5,6 +5,7 @@ using UnityEditorInternal;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEditor;
+using Invector.CharacterController;
 
 public class GameManager : MonoBehaviour
 {
@@ -69,29 +70,51 @@ public class GameManager : MonoBehaviour
 
 	public void startMiniGame1 ()
 	{
-		
-		gameItems.worldCamera = miniGame1;
-		useCamera ("miniGame1");
-		player.GetComponent<Player> ().canMove = false;
-		buttonMash.beginButtonMash = true;
-		currItemIndex++;
-		setCurrItem (currItemIndex);
+		print ("mini game 1");
+		nextItem ();
+
+//		player.GetComponent<vThirdPersonInput> ().enabled = false;
+//		player.GetComponent<Player> ().setPos (1);
+//		//cutscene
+//		//useCamera("movie");
+//
+//		gameItems.worldCamera = miniGame1;
+//		useCamera ("miniGame1");
+
+		StartCoroutine (miniGameOne ());
+
+
 	}
 
 	public void endMiniGame ()
 	{
 		gameItems.worldCamera = playerCam;
 		useCamera ("player");
-		player.GetComponent<Player> ().canMove = true;
+		player.GetComponent<vThirdPersonInput> ().enabled = true;
+		player.GetComponent<Player> ().removeConstraints ();
 	}
 
 	public void startMiniGame2 ()
 	{
-		currItemIndex++;
-		setCurrItem (currItemIndex);
+		nextItem ();
 		gameItems.worldCamera = miniGame2;
 		useCamera ("miniGame2");
 		buttonMash.beginButtonMash = true;
+	}
+
+	private IEnumerator miniGameOne ()
+	{
+		yield return new WaitForSeconds (2f);
+		player.GetComponent<vThirdPersonInput> ().enabled = false;
+		player.GetComponent<Player> ().setPos (1);
+		//cutscene
+		//useCamera("movie");
+
+		gameItems.worldCamera = miniGame1;
+		useCamera ("miniGame1");
+		yield return new WaitForSeconds (2f);
+		buttonMash.beginButtonMash = true;
+
 	}
 
 
