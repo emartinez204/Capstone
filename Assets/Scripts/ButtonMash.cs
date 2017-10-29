@@ -76,7 +76,7 @@ public class ButtonMash : MonoBehaviour
 		} else {
 			showButton (false);
 			//GameManager.instance.player.GetComponent <Player> ().enabled = true;
-			GameManager.instance.endMiniGame ();
+			//GameManager.instance.endMiniGame ();
 		}
 		
 	}

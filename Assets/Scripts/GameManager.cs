@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.Rendering;
 using UnityEditor;
 using Invector.CharacterController;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -48,7 +49,7 @@ public class GameManager : MonoBehaviour
 		else if (instance != this)
 			Destroy (gameObject);
 
-		DontDestroyOnLoad (gameObject);
+		//DontDestroyOnLoad (gameObject);
 
 		buttonMash = GetComponent<ButtonMash> ();
 		trajectory = GetComponent<Trajectory> ();
@@ -56,15 +57,21 @@ public class GameManager : MonoBehaviour
 		//default
 		//usingController = false;
 
-		if (DEBUG)
-			useCamera ("player");
-		else
-			useCamera ("canvas");
+//		if (DEBUG)
+//			useCamera ("player");
+//		else
+
+
+//		player.GetComponent<vThirdPersonController> ().enabled = false;
+//		player.GetComponent<vThirdPersonInput> ().enabled = false;
+//		playerCam.enabled = false;
 
 		musicOn = true;
 		musicVolume = 0.5f;
 
 		setCurrItem (currItemIndex);
+
+		useCamera ("canvas");
 
 	}
 
@@ -73,15 +80,15 @@ public class GameManager : MonoBehaviour
 		print ("mini game 1");
 		nextItem ();
 
-//		player.GetComponent<vThirdPersonInput> ().enabled = false;
-//		player.GetComponent<Player> ().setPos (1);
-//		//cutscene
-//		//useCamera("movie");
-//
-//		gameItems.worldCamera = miniGame1;
-//		useCamera ("miniGame1");
+		player.GetComponent<vThirdPersonInput> ().enabled = false;
+		player.GetComponent<Player> ().setPos (1);
+		//cutscene
+		//useCamera("movie");
 
-		StartCoroutine (miniGameOne ());
+		gameItems.worldCamera = miniGame1;
+		useCamera ("miniGame1");
+
+		//StartCoroutine (miniGameOne ());
 
 
 	}
@@ -170,7 +177,7 @@ public class GameManager : MonoBehaviour
 			break;
 		}
 
-
+		print (cam);
 	}
 
 	private void disableCams ()
