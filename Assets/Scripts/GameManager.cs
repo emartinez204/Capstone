@@ -15,13 +15,18 @@ public class GameManager : MonoBehaviour
 	public bool DEBUG;
 	public bool usingController;
 
+
 	public GameObject player;
+	public GameObject startPoint;
 	public GameObject arrow;
 
 	public bool musicOn;
 	public float musicVolume;
 
 	public Canvas gameItems;
+	public GameObject videoCanvas;
+
+	public string currentCam;
 	public Camera canvasCam;
 	public Camera playerCam;
 	public Camera movieCam;
@@ -38,9 +43,9 @@ public class GameManager : MonoBehaviour
 
 	private int currItemIndex = 0;
 
+
 	private ButtonMash buttonMash;
 	private Trajectory trajectory;
-
 
 	void Awake ()
 	{
@@ -66,17 +71,28 @@ public class GameManager : MonoBehaviour
 //		player.GetComponent<vThirdPersonInput> ().enabled = false;
 //		playerCam.enabled = false;
 
-		musicOn = true;
-		musicVolume = 0.5f;
 
-		setCurrItem (currItemIndex);
 
-		useCamera ("canvas");
+		reset ();
 
 	}
 
-	public void startMiniGame1 ()
+
+	public void movePlayer (bool val)
 	{
+		player.GetComponent<vThirdPersonInput> ().enabled = val;
+
+		if (val)
+			player.GetComponent<Player> ().removeConstraints ();
+	}
+
+	public IEnumerator startMiniGame1 ()
+	{
+		print ("mini game 1");
+		while (videoCanvas.GetComponent<Video> ().started == true) {
+			yield return new WaitForSeconds (0.1f);
+		}
+
 		print ("mini game 1");
 		nextItem ();
 
@@ -86,8 +102,10 @@ public class GameManager : MonoBehaviour
 		//useCamera("movie");
 
 		gameItems.worldCamera = miniGame1;
-		useCamera ("miniGame1");
+		//useCamera ("miniGame1");
 
+		yield return new WaitForSeconds (2f);
+		buttonMash.beginButtonMash = true;
 		//StartCoroutine (miniGameOne ());
 
 
@@ -97,8 +115,7 @@ public class GameManager : MonoBehaviour
 	{
 		gameItems.worldCamera = playerCam;
 		useCamera ("player");
-		player.GetComponent<vThirdPersonInput> ().enabled = true;
-		player.GetComponent<Player> ().removeConstraints ();
+		movePlayer (true);
 	}
 
 	public void startMiniGame2 ()
@@ -109,21 +126,18 @@ public class GameManager : MonoBehaviour
 		buttonMash.beginButtonMash = true;
 	}
 
-	private IEnumerator miniGameOne ()
+
+	public void setNextVideo ()
 	{
-		yield return new WaitForSeconds (2f);
-		player.GetComponent<vThirdPersonInput> ().enabled = false;
-		player.GetComponent<Player> ().setPos (1);
-		//cutscene
-		//useCamera("movie");
-
-		gameItems.worldCamera = miniGame1;
-		useCamera ("miniGame1");
-		yield return new WaitForSeconds (2f);
-		buttonMash.beginButtonMash = true;
-
+		videoCanvas.GetComponent<Video> ().setNextVideo ();
 	}
 
+	public IEnumerator playVideo (string backCam)
+	{
+		
+		videoCanvas.GetComponent<Video> ().playVideo (backCam);
+		yield return new WaitForSeconds (1f);
+	}
 
 	public void resetMats ()
 	{
@@ -177,7 +191,7 @@ public class GameManager : MonoBehaviour
 			break;
 		}
 
-		print (cam);
+		currentCam = cam;
 	}
 
 	private void disableCams ()
@@ -219,6 +233,18 @@ public class GameManager : MonoBehaviour
 	{
 		musicVolume = slide.value;
 	}
-		
+
+	public void reset ()
+	{
+		musicOn = true;
+		musicVolume = 0.5f;
+		currItemIndex = 0;
+		setCurrItem (currItemIndex);
+
+		useCamera ("canvas");
+
+		player.transform.position = startPoint.transform.position;
+		//call all other reset functions
+	}
 
 }

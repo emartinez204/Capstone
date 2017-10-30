@@ -11,6 +11,9 @@ public class Interactables : MonoBehaviour
 	private string buttonTxt;
 	private string interact;
 
+	private bool firstGame1 = true;
+	private bool firstScrap = true;
+
 	void Update ()
 	{
 		if (GameManager.instance.usingController) {
@@ -32,6 +35,15 @@ public class Interactables : MonoBehaviour
 			if (other.gameObject.name.ToString () == "pitchfork") {
 				itemTxt.text += buttonTxt + " to pick up.";
 			}
+
+			if (other.gameObject.name.ToString () == "scrapheap" &&
+			    GameManager.instance.currItem.gameObject.name.ToString () == "scrapheap" && firstScrap) {
+				GameManager.instance.setNextVideo ();
+				GameManager.instance.movePlayer (false);
+				StartCoroutine (GameManager.instance.playVideo ("player"));
+				GameManager.instance.nextItem ();
+				firstScrap = false;
+			}
 		}
 
 		if (other.tag == "Door") {
@@ -39,8 +51,17 @@ public class Interactables : MonoBehaviour
 			other.GetComponent<Door> ().Move ();
 		}
 
-		if (other.tag == "miniGame1" && GameManager.instance.currItem.gameObject.name.ToString () == "Door1") {
-			GameManager.instance.startMiniGame1 ();
+		if (other.tag == "miniGame1" && GameManager.instance.currItem.gameObject.name.ToString () == "Door1" && firstGame1) {
+			GameManager.instance.setNextVideo ();
+			StartCoroutine (GameManager.instance.playVideo ("miniGame1"));
+			StartCoroutine (GameManager.instance.startMiniGame1 ());
+			firstGame1 = false;
+		}
+
+		if (other.tag == "Door2" && GameManager.instance.currItem.gameObject.name.ToString () == "Door2") {
+			GameManager.instance.setNextVideo ();
+			StartCoroutine (GameManager.instance.playVideo ("player"));
+			StartCoroutine (other.GetComponent<Door> ().Move ());
 		}
 
 	}
@@ -64,6 +85,8 @@ public class Interactables : MonoBehaviour
 				GameManager.instance.nextItem ();
 			}
 		}
+
+
 	}
 
 	void OnTriggerExit (Collider other)
@@ -71,5 +94,11 @@ public class Interactables : MonoBehaviour
 		itemTxt.text = "";
 	}
 
+
+	public void reset ()
+	{
+		firstGame1 = true;
+		firstScrap = true;
+	}
 
 }
