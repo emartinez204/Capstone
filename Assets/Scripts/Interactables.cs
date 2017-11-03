@@ -12,10 +12,10 @@ public class Interactables : MonoBehaviour
 	private string interact;
 
 	private bool firstGame1 = true;
-	private bool firstScrap = true;
 	private bool firstDoor = true;
 	private bool secondDoor = true;
 	private bool firstGame2 = true;
+	private bool firstGame3 = true;
 
 	void Update ()
 	{
@@ -39,14 +39,8 @@ public class Interactables : MonoBehaviour
 				itemTxt.text += buttonTxt + " to pick up.";
 			}
 
-			if (other.gameObject.name.ToString () == "scrapheap" &&
-			    GameManager.instance.currItem.gameObject.name.ToString () == "scrapheap" && firstScrap) {
-				//GameManager.instance.movePlayer (false);
-				GameManager.instance.setNextVideo ();
-				//StartCoroutine (GameManager.instance.playVideo ("player"));
-				GameManager.instance.playVideo ("player");
-				StartCoroutine (GameManager.instance.waitForVideo (false));
-				firstScrap = false;
+			if (other.gameObject.name.ToString () == "scrapheap") {
+				
 			}
 		}
 
@@ -63,7 +57,10 @@ public class Interactables : MonoBehaviour
 			firstGame1 = false;
 		}
 
-		if (other.tag == "miniGame2" && GameManager.instance.currItem.gameObject.name.ToString () == "Door2" && firstDoor) {
+		if (other.tag == "cutscene" && GameManager.instance.currItem.gameObject.name.ToString () == "Door2" && firstDoor) {
+			if (GameManager.instance.currItem.GetComponent<Door> ().RotationPending == false)
+				StartCoroutine (other.GetComponent<Door> ().Move ());
+			
 			GameManager.instance.setNextVideo ();
 			//StartCoroutine (GameManager.instance.playVideo ("player"));
 			GameManager.instance.playVideo ("player");
@@ -80,6 +77,15 @@ public class Interactables : MonoBehaviour
 			StartCoroutine (GameManager.instance.startMiniGame2 ());
 
 			secondDoor = false;
+		}
+
+		if (firstGame3 && !firstGame1 && !firstDoor && !secondDoor && other.tag == "miniGame1"
+		    && GameManager.instance.currItem.gameObject.name.ToString () == "Door1") {
+			GameManager.instance.setNextVideo ();
+			//StartCoroutine (GameManager.instance.playVideo ("miniGame1"));
+			GameManager.instance.playVideo ("miniGame3");
+			StartCoroutine (GameManager.instance.startMiniGame3 ());
+			firstGame3 = false;
 		}
 
 	}
@@ -116,7 +122,10 @@ public class Interactables : MonoBehaviour
 	public void reset ()
 	{
 		firstGame1 = true;
-		firstScrap = true;
+		firstDoor = true;
+		secondDoor = true;
+		firstGame2 = true;
+		firstGame3 = true;
 	}
 
 }

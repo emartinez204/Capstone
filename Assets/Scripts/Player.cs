@@ -83,11 +83,13 @@ public class Player : MonoBehaviour
 		
 		if (spotNum == 1) {
 			transform.position = spot1.position;
-			//transform.rotation = new Quaternion (0, 140, 0, 0);
+			transform.rotation = spot1.rotation;
 		} else if (spotNum == 2) {
 			transform.position = spot2.position;
+			transform.rotation = spot1.rotation;
 		} else if (spotNum == 3) {
 			transform.position = spot3.position;
+			transform.rotation = spot1.rotation;
 		}
 	}
 

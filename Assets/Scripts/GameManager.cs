@@ -140,6 +140,26 @@ public class GameManager : MonoBehaviour
 		buttonMash.beginButtonMash = true;
 	}
 
+	public IEnumerator startMiniGame3 ()
+	{
+		print ("mini game 3");
+		settingsButton.SetActive (false);
+		while (videoCanvas.GetComponent<Video> ().started == true) {
+			yield return new WaitForSeconds (0.1f);
+		}
+
+		print ("mini game 3");
+	
+		movePlayer (false);
+		player.GetComponent<Player> ().setPos (3);
+
+		gameItems.worldCamera = miniGame3;
+
+
+		yield return new WaitForSeconds (2f);
+		trajectory.moveSlider = true;
+	}
+
 	public IEnumerator waitForVideo (bool nDay)
 	{
 		print ("wait 1");
