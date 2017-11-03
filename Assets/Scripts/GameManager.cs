@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
 	public bool musicOn;
 	public float musicVolume;
 
+	public GameObject settingsButton;
 	public Canvas gameItems;
 	public GameObject videoCanvas;
 
@@ -46,6 +47,8 @@ public class GameManager : MonoBehaviour
 
 	private ButtonMash buttonMash;
 	private Trajectory trajectory;
+
+	public bool isNextDay = false;
 
 	void Awake ()
 	{
@@ -89,6 +92,7 @@ public class GameManager : MonoBehaviour
 	public IEnumerator startMiniGame1 ()
 	{
 		print ("mini game 1");
+		settingsButton.SetActive (false);
 		while (videoCanvas.GetComponent<Video> ().started == true) {
 			yield return new WaitForSeconds (0.1f);
 		}
@@ -98,17 +102,13 @@ public class GameManager : MonoBehaviour
 
 		player.GetComponent<vThirdPersonInput> ().enabled = false;
 		player.GetComponent<Player> ().setPos (1);
-		//cutscene
-		//useCamera("movie");
 
 		gameItems.worldCamera = miniGame1;
-		//useCamera ("miniGame1");
 
+	
 		yield return new WaitForSeconds (2f);
 		buttonMash.beginButtonMash = true;
-		//StartCoroutine (miniGameOne ());
-
-
+	
 	}
 
 	public void endMiniGame ()
@@ -116,14 +116,52 @@ public class GameManager : MonoBehaviour
 		gameItems.worldCamera = playerCam;
 		useCamera ("player");
 		movePlayer (true);
+		settingsButton.SetActive (true);
 	}
 
-	public void startMiniGame2 ()
+	public IEnumerator startMiniGame2 ()
 	{
+		print ("mini game 2");
+		settingsButton.SetActive (false);
+		while (videoCanvas.GetComponent<Video> ().started == true) {
+			yield return new WaitForSeconds (0.1f);
+		}
+
+		print ("mini game 2");
 		nextItem ();
+
+		movePlayer (false);
+		player.GetComponent<Player> ().setPos (2);
+
 		gameItems.worldCamera = miniGame2;
-		useCamera ("miniGame2");
+
+
+		yield return new WaitForSeconds (2f);
 		buttonMash.beginButtonMash = true;
+	}
+
+	public IEnumerator waitForVideo (bool nDay)
+	{
+		print ("wait 1");
+		while (videoCanvas.GetComponent<Video> ().started == true) {
+			yield return new WaitForSeconds (0.1f);
+		}
+		print ("wait 2");
+
+
+		
+		yield return new WaitForSeconds (0.1f);
+		nextItem ();
+
+		if (nDay)
+			nextDay ();
+
+	}
+
+	public void nextDay ()
+	{
+		isNextDay = true;
+		player.transform.position = startPoint.transform.position;
 	}
 
 
@@ -132,11 +170,11 @@ public class GameManager : MonoBehaviour
 		videoCanvas.GetComponent<Video> ().setNextVideo ();
 	}
 
-	public IEnumerator playVideo (string backCam)
+	public void playVideo (string backCam)
 	{
 		
 		videoCanvas.GetComponent<Video> ().playVideo (backCam);
-		yield return new WaitForSeconds (1f);
+		//yield return new WaitForSeconds (1f);
 	}
 
 	public void resetMats ()
@@ -242,6 +280,8 @@ public class GameManager : MonoBehaviour
 		setCurrItem (currItemIndex);
 
 		useCamera ("canvas");
+
+		settingsButton.SetActive (true);
 
 		player.transform.position = startPoint.transform.position;
 		//call all other reset functions

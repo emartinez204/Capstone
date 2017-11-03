@@ -13,6 +13,9 @@ public class Interactables : MonoBehaviour
 
 	private bool firstGame1 = true;
 	private bool firstScrap = true;
+	private bool firstDoor = true;
+	private bool secondDoor = true;
+	private bool firstGame2 = true;
 
 	void Update ()
 	{
@@ -38,10 +41,11 @@ public class Interactables : MonoBehaviour
 
 			if (other.gameObject.name.ToString () == "scrapheap" &&
 			    GameManager.instance.currItem.gameObject.name.ToString () == "scrapheap" && firstScrap) {
+				//GameManager.instance.movePlayer (false);
 				GameManager.instance.setNextVideo ();
-				GameManager.instance.movePlayer (false);
-				StartCoroutine (GameManager.instance.playVideo ("player"));
-				GameManager.instance.nextItem ();
+				//StartCoroutine (GameManager.instance.playVideo ("player"));
+				GameManager.instance.playVideo ("player");
+				StartCoroutine (GameManager.instance.waitForVideo (false));
 				firstScrap = false;
 			}
 		}
@@ -53,15 +57,29 @@ public class Interactables : MonoBehaviour
 
 		if (other.tag == "miniGame1" && GameManager.instance.currItem.gameObject.name.ToString () == "Door1" && firstGame1) {
 			GameManager.instance.setNextVideo ();
-			StartCoroutine (GameManager.instance.playVideo ("miniGame1"));
+			//StartCoroutine (GameManager.instance.playVideo ("miniGame1"));
+			GameManager.instance.playVideo ("miniGame1");
 			StartCoroutine (GameManager.instance.startMiniGame1 ());
 			firstGame1 = false;
 		}
 
-		if (other.tag == "Door2" && GameManager.instance.currItem.gameObject.name.ToString () == "Door2") {
+		if (other.tag == "miniGame2" && GameManager.instance.currItem.gameObject.name.ToString () == "Door2" && firstDoor) {
 			GameManager.instance.setNextVideo ();
-			StartCoroutine (GameManager.instance.playVideo ("player"));
-			StartCoroutine (other.GetComponent<Door> ().Move ());
+			//StartCoroutine (GameManager.instance.playVideo ("player"));
+			GameManager.instance.playVideo ("player");
+			StartCoroutine (GameManager.instance.waitForVideo (true));
+
+			firstDoor = false;
+		}
+
+		if (GameManager.instance.isNextDay && !firstDoor && secondDoor && other.tag == "miniGame2"
+		    && GameManager.instance.currItem.gameObject.name.ToString () == "Door2") {
+
+			GameManager.instance.setNextVideo ();
+			GameManager.instance.playVideo ("miniGame2");
+			StartCoroutine (GameManager.instance.startMiniGame2 ());
+
+			secondDoor = false;
 		}
 
 	}

@@ -7,7 +7,7 @@ using UnityEngine;
 public class Video : MonoBehaviour
 {
 	public MovieTexture[] movie;
-	private int curVideo = 0;
+	public int curVideo = 0;
 
 	public bool started = false;
 	private string backCam = "player";
@@ -22,6 +22,7 @@ public class Video : MonoBehaviour
 	void Update ()
 	{
 		if (started && !movie [curVideo].isPlaying) {
+			movie [curVideo].Stop ();
 			GameManager.instance.useCamera (backCam);
 
 			started = false;
@@ -37,11 +38,12 @@ public class Video : MonoBehaviour
 
 	public void playVideo (string backCam)
 	{
+		print ("play video 1");
 		GameManager.instance.useCamera ("movie");
 		movie [curVideo].Play ();
 		started = true;
 		this.backCam = backCam;
-
+		print ("play video 2");
 	}
 
 	public void reset ()
