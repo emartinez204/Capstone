@@ -17,11 +17,11 @@ public class Pitchfork : MonoBehaviour
 	{
 		checkController ();
 
-		if (holding && !GameManager.instance.game1 && !GameManager.instance.game2 && !GameManager.instance.game3) {
-			if (Input.GetKeyDown (interact)) {
-				putDown ();
-			}
-		}
+//		if (holding && !GameManager.instance.game1 && !GameManager.instance.game2 && !GameManager.instance.game3) {
+//			if (Input.GetKeyDown (interact)) {
+//				putDown ();
+//			}
+//		}
 	}
 
 	public void pickup ()

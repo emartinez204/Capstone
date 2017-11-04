@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //[RequireComponent (typeof (AudioSource))]
+using UnityEngine.UI;
 
 public class Video : MonoBehaviour
 {
 	public MovieTexture[] movie;
 	public int curVideo = 0;
+
+	public Text text;
 
 	public bool started = false;
 	private string backCam = "player";
@@ -52,12 +55,14 @@ public class Video : MonoBehaviour
 	{
 		if (started) {
 			if (GameManager.instance.usingController) {
+				text.text = "Press 'A' to skip";
 				if (Input.GetKeyDown ("joystick button 16")) {
 					movie [curVideo].Stop ();
 					GameManager.instance.useCamera (backCam);
 					started = false;
 				}
 			} else {
+				text.text = "Press 'space' to skip";
 				if (Input.GetKeyDown ("space")) {
 					movie [curVideo].Stop ();
 					GameManager.instance.useCamera (backCam);
