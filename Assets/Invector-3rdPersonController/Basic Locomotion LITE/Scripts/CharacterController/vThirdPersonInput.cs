@@ -11,15 +11,15 @@ namespace Invector.CharacterController
 		#region variables
 
 		[Header ("Default Inputs")]
-		public string horizontalInput = "Horizontal";
-		public string verticallInput = "Vertical";
+		public string horizontalInput;
+		public string verticallInput;
 		//		public KeyCode jumpInput = KeyCode.Space;
 		//		public KeyCode strafeInput = KeyCode.Tab;
 		//		public KeyCode sprintInput = KeyCode.LeftShift;
 
 		[Header ("Camera Settings")]
-		public string rotateCameraXInput = "RotateCamX";
-		public string rotateCameraYInput = "RotateCamY";
+		public string rotateCameraXInput;
+		public string rotateCameraYInput;
 
 		protected vThirdPersonCamera tpCamera;
 		// acess camera info
@@ -46,6 +46,7 @@ namespace Invector.CharacterController
 
 		protected virtual void Start ()
 		{
+			checkController ();
 			CharacterInit ();
 		}
 
@@ -81,13 +82,28 @@ namespace Invector.CharacterController
 		{
 			
 
-			//zoom = Input.GetAxis ("ZoomJ");
-			
+
+			checkController ();
 
 
 
 			cc.UpdateMotor ();                   // call ThirdPersonMotor methods               
 			cc.UpdateAnimator ();                // call ThirdPersonAnimator methods		               
+		}
+
+		private void checkController ()
+		{
+			if (GameManager.instance.usingController) {
+				horizontalInput = "HorizontalJ";
+				verticallInput = "VerticalJ";
+				rotateCameraXInput = "RotateCamXJ";
+				rotateCameraYInput = "RotateCamYJ";
+			} else {
+				horizontalInput = "Horizontal";
+				verticallInput = "Vertical";
+				rotateCameraXInput = "RotateCamX";
+				rotateCameraYInput = "RotateCamY";
+			}
 		}
 
 		protected virtual void InputHandle ()

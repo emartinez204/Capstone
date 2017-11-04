@@ -19,15 +19,8 @@ public class Interactables : MonoBehaviour
 
 	void Update ()
 	{
-		if (GameManager.instance.usingController) {
-			interact = "joystick button 16";
-			buttonTxt = "Press A";
-		} else {
-			interact = "e";
-			buttonTxt = "Press E";
-		}
-
-
+		
+		checkController ();
 	}
 
 	void OnTriggerEnter (Collider other)
@@ -126,6 +119,18 @@ public class Interactables : MonoBehaviour
 		secondDoor = true;
 		firstGame2 = true;
 		firstGame3 = true;
+	}
+
+	private void checkController ()
+	{
+		if (GameManager.instance.usingController) {
+			interact = "joystick button 16";
+			buttonTxt = "Press A";
+		} else {
+			interact = "e";
+			buttonTxt = "Press E";
+		}
+
 	}
 
 }

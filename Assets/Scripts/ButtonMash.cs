@@ -46,7 +46,7 @@ public class ButtonMash : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		//checkController ();
+		checkController ();
 
 		if (beginButtonMash) {
 			//GameManager.instance.player.GetComponent <Player> ().enabled = false;
