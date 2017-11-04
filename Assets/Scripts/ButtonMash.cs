@@ -49,7 +49,7 @@ public class ButtonMash : MonoBehaviour
 		checkController ();
 
 		if (beginButtonMash) {
-			//GameManager.instance.player.GetComponent <Player> ().enabled = false;
+			
 			showButton (true);
 
 			if (curButton <= numButtons) {
@@ -70,7 +70,7 @@ public class ButtonMash : MonoBehaviour
 					print ("percent correct = " + percent);
 				}
 				beginButtonMash = false;
-				GameManager.instance.endMiniGame ();
+				GameManager.instance.endMiniGame (false);
 			}
 				
 
@@ -158,5 +158,6 @@ public class ButtonMash : MonoBehaviour
 		curButton = 0;
 		correct = 0;
 		LoadingBar.fillAmount = 0f;
+		userInputMatches = false;
 	}
 }

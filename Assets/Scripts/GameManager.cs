@@ -50,6 +50,10 @@ public class GameManager : MonoBehaviour
 
 	public bool isNextDay = false;
 
+	public bool game1 = false;
+	public bool game2 = false;
+	public bool game3 = false;
+
 	void Awake ()
 	{
 		if (instance == null)
@@ -75,7 +79,8 @@ public class GameManager : MonoBehaviour
 //		playerCam.enabled = false;
 
 
-
+		musicOn = true;
+		musicVolume = 0.5f;
 		reset ();
 
 	}
@@ -91,50 +96,58 @@ public class GameManager : MonoBehaviour
 
 	public IEnumerator startMiniGame1 ()
 	{
-		print ("mini game 1");
+		game1 = true;
 		settingsButton.SetActive (false);
 		while (videoCanvas.GetComponent<Video> ().started == true) {
 			yield return new WaitForSeconds (0.1f);
 		}
 
-		print ("mini game 1");
-		nextItem ();
-
 		player.GetComponent<vThirdPersonInput> ().enabled = false;
 		player.GetComponent<Player> ().setPos (1);
 
 		gameItems.worldCamera = miniGame1;
-
+		buttonMash.reset ();
 	
 		yield return new WaitForSeconds (2f);
 		buttonMash.beginButtonMash = true;
 	
 	}
 
-	public void endMiniGame ()
+	public void endMiniGame (bool theEnd)
 	{
-		gameItems.worldCamera = playerCam;
-		useCamera ("player");
-		movePlayer (true);
-		settingsButton.SetActive (true);
+		game1 = false;
+		game2 = false;
+		game3 = false;
+
+		if (!theEnd) {
+			gameItems.worldCamera = playerCam;
+			useCamera ("player");
+			movePlayer (true);
+			settingsButton.SetActive (true);
+
+			if (currItemIndex != storyItems.Length - 1)
+				nextItem ();
+		} else {
+			setNextVideo ();
+			playVideo ("canvas");
+			reset ();
+		}
+
 	}
 
 	public IEnumerator startMiniGame2 ()
 	{
-		print ("mini game 2");
+		game2 = true;
 		settingsButton.SetActive (false);
 		while (videoCanvas.GetComponent<Video> ().started == true) {
 			yield return new WaitForSeconds (0.1f);
 		}
 
-		print ("mini game 2");
-		nextItem ();
-
 		movePlayer (false);
 		player.GetComponent<Player> ().setPos (2);
 
 		gameItems.worldCamera = miniGame2;
-
+		buttonMash.reset ();
 
 		yield return new WaitForSeconds (2f);
 		buttonMash.beginButtonMash = true;
@@ -142,19 +155,18 @@ public class GameManager : MonoBehaviour
 
 	public IEnumerator startMiniGame3 ()
 	{
-		print ("mini game 3");
+		game3 = true;
 		settingsButton.SetActive (false);
 		while (videoCanvas.GetComponent<Video> ().started == true) {
 			yield return new WaitForSeconds (0.1f);
 		}
-
-		print ("mini game 3");
+			
 	
 		movePlayer (false);
 		player.GetComponent<Player> ().setPos (3);
 
 		gameItems.worldCamera = miniGame3;
-
+		trajectory.reset ();
 
 		yield return new WaitForSeconds (2f);
 		trajectory.moveSlider = true;
@@ -171,7 +183,8 @@ public class GameManager : MonoBehaviour
 
 		
 		yield return new WaitForSeconds (0.1f);
-		nextItem ();
+		if (currItemIndex != storyItems.Length - 1)
+			nextItem ();
 
 		if (nDay)
 			nextDay ();
@@ -180,8 +193,12 @@ public class GameManager : MonoBehaviour
 
 	public void nextDay ()
 	{
-		isNextDay = true;
+		if (currItem.GetComponent<Door> ().RotationPending == false)
+			StartCoroutine (currItem.GetComponent<Door> ().Move ());
 		player.transform.position = startPoint.transform.position;
+		isNextDay = true;
+
+		
 	}
 
 
@@ -294,8 +311,8 @@ public class GameManager : MonoBehaviour
 
 	public void reset ()
 	{
-		musicOn = true;
-		musicVolume = 0.5f;
+//		musicOn = true;
+//		musicVolume = 0.5f;
 		currItemIndex = 0;
 		setCurrItem (currItemIndex);
 
@@ -304,7 +321,14 @@ public class GameManager : MonoBehaviour
 		settingsButton.SetActive (true);
 
 		player.transform.position = startPoint.transform.position;
+
 		//call all other reset functions
+		player.GetComponent<Interactables> ().reset ();
+	}
+
+	public void quit ()
+	{
+		Application.Quit ();
 	}
 
 }

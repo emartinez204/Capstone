@@ -11,6 +11,7 @@ public class Interactables : MonoBehaviour
 	private string buttonTxt;
 	private string interact;
 
+	private bool firstPitchfork = true;
 	private bool firstGame1 = true;
 	private bool firstDoor = true;
 	private bool secondDoor = true;
@@ -51,8 +52,8 @@ public class Interactables : MonoBehaviour
 		}
 
 		if (other.tag == "cutscene" && GameManager.instance.currItem.gameObject.name.ToString () == "Door2" && firstDoor) {
-			if (GameManager.instance.currItem.GetComponent<Door> ().RotationPending == false)
-				StartCoroutine (other.GetComponent<Door> ().Move ());
+//			if (GameManager.instance.currItem.GetComponent<Door> ().RotationPending == false)
+//				StartCoroutine (GameManager.instance.currItem.GetComponent<Door> ().Move ());
 			
 			GameManager.instance.setNextVideo ();
 			//StartCoroutine (GameManager.instance.playVideo ("player"));
@@ -89,21 +90,33 @@ public class Interactables : MonoBehaviour
 
 			if (Input.GetKeyDown (interact)) {
 
-				if (other.GetComponent<Door> ().RotationPending == false)
-					StartCoroutine (other.GetComponent<Door> ().Move ());
+				StartCoroutine (openAndCloseDoor (other.gameObject));
 				
 			}
 		}
 
 		if (other.gameObject.name.ToString () == "pitchfork") {
 			if (Input.GetKeyDown (interact)) {
-				GameManager.instance.resetMats ();
 				other.GetComponent<Pitchfork> ().pickup ();
-				GameManager.instance.nextItem ();
+
+				if (firstPitchfork) {
+					GameManager.instance.resetMats ();
+					GameManager.instance.nextItem ();
+					firstPitchfork = false;
+				}
 			}
 		}
 
 
+	}
+
+	private IEnumerator openAndCloseDoor (GameObject door)
+	{
+		if (door.GetComponent<Door> ().RotationPending == false) {
+			StartCoroutine (door.GetComponent<Door> ().Move ());
+			yield return new WaitForSeconds (5f);
+			StartCoroutine (door.GetComponent<Door> ().Move ());
+		}
 	}
 
 	void OnTriggerExit (Collider other)
@@ -114,6 +127,7 @@ public class Interactables : MonoBehaviour
 
 	public void reset ()
 	{
+		firstPitchfork = true;
 		firstGame1 = true;
 		firstDoor = true;
 		secondDoor = true;

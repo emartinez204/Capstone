@@ -57,6 +57,7 @@ public class Trajectory : MonoBehaviour
 		
 		if (curThrows == numThrows) {
 			showTrajBar (false);
+			GameManager.instance.endMiniGame (true);
 		} else {
 			yield return new WaitForSeconds (3);
 			moveSlider = true;
@@ -86,6 +87,7 @@ public class Trajectory : MonoBehaviour
 		traj.value = 0;
 		showTrajBar (false);
 		moveSlider = false;
+		curThrows = 0;
 	}
 
 }
