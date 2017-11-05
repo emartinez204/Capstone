@@ -54,12 +54,12 @@ public class Trajectory : MonoBehaviour
 
 	IEnumerator wait ()
 	{
-		
 		if (curThrows == numThrows) {
+			yield return new WaitForSeconds (2f);
 			showTrajBar (false);
 			GameManager.instance.endMiniGame (true);
 		} else {
-			yield return new WaitForSeconds (3);
+			yield return new WaitForSeconds (3f);
 			moveSlider = true;
 			//once animation over, start slider again
 		}

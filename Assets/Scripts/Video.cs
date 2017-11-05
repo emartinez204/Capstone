@@ -13,6 +13,7 @@ public class Video : MonoBehaviour
 	public Text text;
 
 	public bool started = false;
+	public bool canSkip = true;
 	private string backCam = "player";
 
 	// Use this for initialization
@@ -24,7 +25,10 @@ public class Video : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		skip ();
+		if (canSkip)
+			skip ();
+		else
+			text.text = "";
 
 		if (started && !movie [curVideo].isPlaying) {
 			movie [curVideo].Stop ();
@@ -43,12 +47,12 @@ public class Video : MonoBehaviour
 
 	public void playVideo (string backCam)
 	{
-		print ("play video 1");
+		//print ("play video 1");
 		GameManager.instance.useCamera ("movie");
 		movie [curVideo].Play ();
 		started = true;
 		this.backCam = backCam;
-		print ("play video 2");
+		//print ("play video 2");
 	}
 
 	private void skip ()

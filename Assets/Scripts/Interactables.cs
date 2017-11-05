@@ -43,7 +43,7 @@ public class Interactables : MonoBehaviour
 			other.GetComponent<Door> ().Move ();
 		}
 
-		if (other.tag == "miniGame1" && GameManager.instance.currItem.gameObject.name.ToString () == "Door1" && firstGame1) {
+		if (firstGame1 && other.tag == "miniGame1" && GameManager.instance.currItem.gameObject.name.ToString () == "Door1") {
 			GameManager.instance.setNextVideo ();
 			//StartCoroutine (GameManager.instance.playVideo ("miniGame1"));
 			GameManager.instance.playVideo ("miniGame1");
@@ -51,9 +51,7 @@ public class Interactables : MonoBehaviour
 			firstGame1 = false;
 		}
 
-		if (other.tag == "cutscene" && GameManager.instance.currItem.gameObject.name.ToString () == "Door2" && firstDoor) {
-//			if (GameManager.instance.currItem.GetComponent<Door> ().RotationPending == false)
-//				StartCoroutine (GameManager.instance.currItem.GetComponent<Door> ().Move ());
+		if (firstDoor && other.tag == "cutscene" && GameManager.instance.currItem.gameObject.name.ToString () == "Door2") {
 			
 			GameManager.instance.setNextVideo ();
 			//StartCoroutine (GameManager.instance.playVideo ("player"));

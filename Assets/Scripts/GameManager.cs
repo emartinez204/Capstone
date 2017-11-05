@@ -12,21 +12,14 @@ public class GameManager : MonoBehaviour
 {
 
 	public static GameManager instance = null;
+
+	[Header ("Settings")]
 	public bool DEBUG;
 	public bool usingController;
-
-
-	public GameObject player;
-	public GameObject startPoint;
-	public GameObject arrow;
-
 	public bool musicOn;
 	public float musicVolume;
 
-	public GameObject settingsButton;
-	public Canvas gameItems;
-	public GameObject videoCanvas;
-
+	[Header ("Cameras")]
 	public string currentCam;
 	public Camera canvasCam;
 	public Camera playerCam;
@@ -35,6 +28,19 @@ public class GameManager : MonoBehaviour
 	public Camera miniGame2;
 	public Camera miniGame3;
 
+	[Header ("Game Objects")]
+	public GameObject player;
+	public GameObject bird;
+	public GameObject pitchfork;
+	public GameObject arrow;
+
+	public Transform pitchforkStart;
+	public Transform startPoint;
+
+	public GameObject settingsButton;
+	public Canvas gameItems;
+	public GameObject videoCanvas;
+
 	public GameObject[] storyItems;
 	public GameObject currItem;
 
@@ -42,17 +48,20 @@ public class GameManager : MonoBehaviour
 	public Material[] glowMats;
 
 
-	private int currItemIndex = 0;
 
-
-	private ButtonMash buttonMash;
-	private Trajectory trajectory;
-
+	[Header ("Booleans")]
 	public bool isNextDay = false;
 
 	public bool game1 = false;
 	public bool game2 = false;
 	public bool game3 = false;
+
+	public bool startRunning = false;
+
+	private int currItemIndex = 0;
+
+	private ButtonMash buttonMash;
+	private Trajectory trajectory;
 
 	void Awake ()
 	{
@@ -97,6 +106,7 @@ public class GameManager : MonoBehaviour
 	public IEnumerator startMiniGame1 ()
 	{
 		game1 = true;
+		bird.SetActive (true);
 		settingsButton.SetActive (false);
 		while (videoCanvas.GetComponent<Video> ().started == true) {
 			yield return new WaitForSeconds (0.1f);
@@ -118,6 +128,8 @@ public class GameManager : MonoBehaviour
 		game1 = false;
 		game2 = false;
 		game3 = false;
+		startRunning = false;
+		bird.SetActive (false);
 
 		if (!theEnd) {
 			gameItems.worldCamera = playerCam;
@@ -128,9 +140,10 @@ public class GameManager : MonoBehaviour
 			if (currItemIndex != storyItems.Length - 1)
 				nextItem ();
 		} else {
+			videoCanvas.GetComponent<Video> ().canSkip = false;
 			setNextVideo ();
 			playVideo ("canvas");
-			reset ();
+			StartCoroutine (waitToReset ());
 		}
 
 	}
@@ -138,6 +151,7 @@ public class GameManager : MonoBehaviour
 	public IEnumerator startMiniGame2 ()
 	{
 		game2 = true;
+		bird.SetActive (true);
 		settingsButton.SetActive (false);
 		while (videoCanvas.GetComponent<Video> ().started == true) {
 			yield return new WaitForSeconds (0.1f);
@@ -156,11 +170,13 @@ public class GameManager : MonoBehaviour
 	public IEnumerator startMiniGame3 ()
 	{
 		game3 = true;
+		bird.SetActive (true);
 		settingsButton.SetActive (false);
 		while (videoCanvas.GetComponent<Video> ().started == true) {
 			yield return new WaitForSeconds (0.1f);
 		}
 			
+		startRunning = true;
 	
 		movePlayer (false);
 		player.GetComponent<Player> ().setPos (3);
@@ -168,17 +184,17 @@ public class GameManager : MonoBehaviour
 		gameItems.worldCamera = miniGame3;
 		trajectory.reset ();
 
-		yield return new WaitForSeconds (2f);
+		yield return new WaitForSeconds (1f);
 		trajectory.moveSlider = true;
 	}
 
 	public IEnumerator waitForVideo (bool nDay)
 	{
-		print ("wait 1");
+		//print ("wait 1");
 		while (videoCanvas.GetComponent<Video> ().started == true) {
 			yield return new WaitForSeconds (0.1f);
 		}
-		print ("wait 2");
+		//print ("wait 2");
 
 
 		
@@ -191,14 +207,26 @@ public class GameManager : MonoBehaviour
 
 	}
 
+	public IEnumerator waitToReset ()
+	{
+		while (videoCanvas.GetComponent<Video> ().started == true) {
+			yield return new WaitForSeconds (0.1f);
+		}
+		yield return new WaitForSeconds (0.1f);
+		reset ();
+	}
+
 	public void nextDay ()
 	{
-		if (currItem.GetComponent<Door> ().RotationPending == false)
-			StartCoroutine (currItem.GetComponent<Door> ().Move ());
-		player.transform.position = startPoint.transform.position;
+		
+		player.transform.position = startPoint.position;
+		player.transform.rotation = startPoint.rotation;
+
+		playerCam.transform.position = new Vector3 (14f, 0.15f, 0.3f);
+		playerCam.transform.rotation = startPoint.rotation;
+
 		isNextDay = true;
 
-		
 	}
 
 
@@ -319,11 +347,23 @@ public class GameManager : MonoBehaviour
 		useCamera ("canvas");
 
 		settingsButton.SetActive (true);
+		bird.SetActive (false);
 
-		player.transform.position = startPoint.transform.position;
+		player.transform.position = startPoint.position;
+		player.transform.rotation = startPoint.rotation;
+		movePlayer (false);
+
+		playerCam.transform.position = new Vector3 (14f, 0.15f, 0.3f);
+		playerCam.transform.rotation = startPoint.rotation;
+
+		pitchfork.transform.parent = null;
+		pitchfork.transform.position = pitchforkStart.position;
 
 		//call all other reset functions
 		player.GetComponent<Interactables> ().reset ();
+		player.GetComponent<Player> ().resetSpot3 ();
+
+		videoCanvas.GetComponent<Video> ().canSkip = true;
 	}
 
 	public void quit ()
