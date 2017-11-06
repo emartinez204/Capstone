@@ -63,12 +63,14 @@ public class ButtonMash : MonoBehaviour
 
 			} else {
 				//shown all buttons, check how many correct
-				if (correct == numButtons) {
-					print ("perfect score!");
-				} else {
-					float percent = ((float)correct / (float)numButtons) * 100;
-					print ("percent correct = " + percent);
-				}
+//				if (correct == numButtons) {
+//					print ("perfect score!");
+//				} else {
+//					float percent = ((float)correct / (float)numButtons) * 100;
+//					print ("percent correct = " + percent);
+//				}
+				print (correct);
+				GameManager.instance.addToScore (correct);
 				beginButtonMash = false;
 				GameManager.instance.endMiniGame (false);
 			}

@@ -20,11 +20,14 @@ public class Trajectory : MonoBehaviour
 
 	private int curThrows = 0;
 
+	private int score;
+
 	void Start ()
 	{
 		checkController ();
 
 		traj.value = 0;
+		score = 0;
 
 		showTrajBar (false);
 	}
@@ -41,7 +44,10 @@ public class Trajectory : MonoBehaviour
 			if (Input.GetKeyDown (stopButton)) {
 				curThrows++;
 				moveSlider = false;
-				throwValue = traj.value;
+				//throwValue = traj.value;
+
+				int val = getCorrectScore (traj.value);
+				score += val;
 
 				//animation of robot throwing pitchfork at bird
 				StartCoroutine (wait ());
@@ -57,6 +63,7 @@ public class Trajectory : MonoBehaviour
 		if (curThrows == numThrows) {
 			yield return new WaitForSeconds (2f);
 			showTrajBar (false);
+			GameManager.instance.addToScore (score);
 			GameManager.instance.endMiniGame (true);
 		} else {
 			yield return new WaitForSeconds (3f);
@@ -81,6 +88,21 @@ public class Trajectory : MonoBehaviour
 		trajectoryBar.SetActive (val);
 	}
 
+	private int getCorrectScore (float val)
+	{
+		//val = 0, return 0
+		//val = 1, return 0
+		//val > 0 and val < 1, return val*10
+
+		if (val == 0f || val == 1f) {
+			return 0;
+		} else if (val > 0.5f) {
+			return (int)((1f - val) * 10);
+		} else
+			return (int)(val * 10);
+		
+	}
+
 
 	public void reset ()
 	{
@@ -88,6 +110,7 @@ public class Trajectory : MonoBehaviour
 		showTrajBar (false);
 		moveSlider = false;
 		curThrows = 0;
+		score = 0;
 	}
 
 }

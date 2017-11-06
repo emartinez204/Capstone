@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
 	public Material[] regularMats;
 	public Material[] glowMats;
 
+	public int overallScore;
 
 
 	[Header ("Booleans")]
@@ -125,6 +126,8 @@ public class GameManager : MonoBehaviour
 
 	public void endMiniGame (bool theEnd)
 	{
+		buttonMash.beginButtonMash = false;
+		trajectory.moveSlider = false;
 		game1 = false;
 		game2 = false;
 		game3 = false;
@@ -140,6 +143,7 @@ public class GameManager : MonoBehaviour
 			if (currItemIndex != storyItems.Length - 1)
 				nextItem ();
 		} else {
+			print ("overall score = " + overallScore);
 			videoCanvas.GetComponent<Video> ().canSkip = false;
 			setNextVideo ();
 			playVideo ("canvas");
@@ -337,12 +341,19 @@ public class GameManager : MonoBehaviour
 		musicVolume = slide.value;
 	}
 
+	public void addToScore (int val)
+	{
+		overallScore += val;
+	}
+
 	public void reset ()
 	{
 //		musicOn = true;
 //		musicVolume = 0.5f;
-		currItemIndex = 0;
+		currItemIndex = 4;
 		setCurrItem (currItemIndex);
+
+		overallScore = 0;
 
 		useCamera ("canvas");
 
@@ -359,8 +370,7 @@ public class GameManager : MonoBehaviour
 		pitchfork.transform.parent = null;
 		pitchfork.transform.position = pitchforkStart.position;
 
-		//call all other reset functions
-		player.GetComponent<Interactables> ().reset ();
+		//player.GetComponent<Interactables> ().reset ();
 		player.GetComponent<Player> ().resetSpot3 ();
 
 		videoCanvas.GetComponent<Video> ().canSkip = true;

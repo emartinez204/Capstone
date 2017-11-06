@@ -12,10 +12,14 @@ public class Interactables : MonoBehaviour
 	private string interact;
 
 	private bool firstPitchfork = true;
-	private bool firstGame1 = true;
-	private bool firstDoor = true;
-	private bool secondDoor = true;
-	private bool firstGame2 = true;
+	private bool firstGame1 = false;
+//true;
+	private bool firstDoor = false;
+//true;
+	private bool secondDoor = false;
+//true;
+	private bool firstGame2 = false;
+//true;
 	private bool firstGame3 = true;
 
 	void Update ()
