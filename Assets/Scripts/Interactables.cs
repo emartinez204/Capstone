@@ -13,13 +13,13 @@ public class Interactables : MonoBehaviour
 
 	private bool firstPitchfork = true;
 	private bool firstGame1 = false;
-//true;
+	//true;
 	private bool firstDoor = false;
-//true;
+	//true;
 	private bool secondDoor = false;
-//true;
+	//true;
 	private bool firstGame2 = false;
-//true;
+	//true;
 	private bool firstGame3 = true;
 
 	void Update ()
@@ -43,7 +43,7 @@ public class Interactables : MonoBehaviour
 		}
 
 		if (other.tag == "Door") {
-			itemTxt.text = "Enter next room? " + buttonTxt;
+			itemTxt.text = "Open door? " + buttonTxt;
 			other.GetComponent<Door> ().Move ();
 		}
 
