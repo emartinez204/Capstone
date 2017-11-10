@@ -33,7 +33,7 @@ public class Interactables : MonoBehaviour
 		if (other.tag == "Interactable") {
 			itemTxt.text = other.gameObject.name.ToString ().ToUpper () + ". . . ";
 
-			if (other.gameObject.name.ToString () == "pitchfork") {
+			if (other.gameObject.name.ToString () == "Pitchfork") {
 				itemTxt.text += buttonTxt + " to pick up.";
 			}
 
@@ -97,7 +97,7 @@ public class Interactables : MonoBehaviour
 			}
 		}
 
-		if (other.gameObject.name.ToString () == "pitchfork") {
+		if (other.gameObject.name.ToString () == "Pitchfork") {
 			if (Input.GetKeyDown (interact)) {
 				other.GetComponent<Pitchfork> ().pickup ();
 
