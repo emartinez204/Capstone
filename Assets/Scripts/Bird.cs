@@ -9,6 +9,9 @@ public class Bird : MonoBehaviour
 	public Transform spot2;
 	public Transform spot3;
 
+	public float speed;
+	public float amp;
+
 	private Vector3 startSpot3;
 	private Vector3 tempPos;
 
@@ -39,7 +42,7 @@ public class Bird : MonoBehaviour
 				
 			if (GameManager.instance.startRunning) {
 				
-				tempPos.x += Mathf.Sin (Time.fixedTime * Mathf.PI * 0.3f) * 0.3f;
+				tempPos.x += Mathf.Sin (Time.fixedTime * Mathf.PI * speed) * amp;
 				tempPos.y = spot3.position.y;
 				tempPos.z = spot3.position.z;
 				transform.position = tempPos;

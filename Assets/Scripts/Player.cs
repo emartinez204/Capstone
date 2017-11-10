@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
 
 
 
+
+
 	void Start ()
 	{
 		rbody = GetComponent<Rigidbody> ();
@@ -65,6 +67,6 @@ public class Player : MonoBehaviour
 
 	public void resetSpot3 ()
 	{
-		spot3.position = new Vector3 (-7f, -1.5f, 16f);
+		spot3.position = new Vector3 (0f, -1.7f, 17f);
 	}
 }
