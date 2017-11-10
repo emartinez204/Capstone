@@ -67,6 +67,6 @@ public class Player : MonoBehaviour
 
 	public void resetSpot3 ()
 	{
-		spot3.position = new Vector3 (0f, -1.7f, 17f);
+		spot3.position = new Vector3 (0f, -1.7f, 20f);
 	}
 }
