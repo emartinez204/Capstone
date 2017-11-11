@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditorInternal;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using Invector.CharacterController;
 using System;
 
@@ -261,7 +263,7 @@ public class GameManager : MonoBehaviour
 		resetMats ();
 		currItem = storyItems [index];
 		currItem.GetComponent<MeshRenderer> ().material = glowMats [index];
-		arrow.GetComponent<Float> ().setPos (new Vector3 (currItem.transform.position.x, currItem.transform.position.y + 2.5f, currItem.transform.position.z));
+		//arrow.GetComponent<Float> ().setPos (new Vector3 (currItem.transform.position.x, currItem.transform.position.y + 2.5f, currItem.transform.position.z));
 
 	}
 
